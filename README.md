@@ -9,7 +9,7 @@ A brief description of your project.
 - Feature 3
 
 ## Installation
-<!-- ```sh -->
+```sh
 git clone https://github.com/your-repo.git
 cd your-project
 npm install
