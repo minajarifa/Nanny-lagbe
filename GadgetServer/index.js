@@ -46,3 +46,6 @@ app.get("/", (req, res) => {
   );
 });
 app.listen(port, () => console.log(`server running or port ${port}`));
+// git add .
+// git commit -m "  "
+// git push

@@ -41,7 +41,7 @@ const Navber = () => {
                             {Navigate}
                         </ul>
                     </div>
-                    <a className="text-xl btn btn-ghost">Website Name</a>
+                    <a className="text-xl btn btn-ghost">Gadget Shop</a>
                 </div>
                 <div className="hidden navbar-center lg:flex">
                     <ul className="px-1 menu menu-horizontal">

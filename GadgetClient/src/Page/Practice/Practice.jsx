@@ -1,7 +1,9 @@
-
+import FormPage from"../../Page/Practice/FormPage"
 
 export default function Practice() {
   return (
-    <div>Practice</div>
+    <div>
+        <FormPage></FormPage>
+    </div>
   )
 }
