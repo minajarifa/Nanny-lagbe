@@ -14,6 +14,7 @@ import Home from './Page/Home/Home.jsx';
 import AuthProvider from './AuthProvider/AuthProvider.jsx';
 import { HelmetProvider } from 'react-helmet-async';
 import Practice from './Page/Practice/Practice.jsx';
+import UpdatePage from './Page/Practice/UpdatePage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         path: "/Practice",
         element: <Practice />,
       },
+      {
+        path:"/UpdatePage",
+        element:<UpdatePage/>
+      }
      
     ],
   },
