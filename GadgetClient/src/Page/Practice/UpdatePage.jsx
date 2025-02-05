@@ -1,9 +1,40 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"
 
 
 export default function UpdatePage() {
-    const handleUpadteSumitForm=(event)=>{
-        event.preventDefeault()
-        console.log("handleUpadteSumitForm")
+    const { id } = useParams();
+    const [product, setProduct] = useState();
+    useEffect(() => {
+        fetch(`http://localhost:5000/singleProduct/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                setProduct(data)
+            })
+    }, [id])
+    const handleUpadteSumitForm = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const brand = form.brand.value;
+        const model = form.model.value;
+        const category = form.category.value;
+        const description = form.description.value;
+        const warranty = form.warranty.value;
+        const GadgetInfo = { name, brand, model, category, description, warranty}
+        console.log(GadgetInfo);
+        fetch(`http://localhost:5000/updateProduct/${product?._id}`, {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(GadgetInfo)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
     }
     return (
         <div>
@@ -15,27 +46,27 @@ export default function UpdatePage() {
                         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                             <div>
                                 <label className="text-gray-700 dark:text-gray-200"> Gadget Name</label>
-                                <input required name="name" placeholder=" Gadget Name" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                                <input required name="name" defaultValue={product?.name} placeholder=" Gadget Name" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </div>
                             <div>
                                 <label className="text-gray-700 dark:text-gray-200" >Brand Name</label>
-                                <input required name="brand" placeholder="Brand Name" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                                <input required name="brand" defaultValue={product?.brand} placeholder="Brand Name" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </div>
                             <div>
                                 <label className="text-gray-700 dark:text-gray-200" >Model Number</label>
-                                <input required name="model" placeholder="Model Number" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                                <input required name="model" defaultValue={product?.model} placeholder="Model Number" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </div>
                             <div>
                                 <label className="text-gray-700 dark:text-gray-200">Category</label>
-                                <input required name="category" placeholder="Category" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                                <input required name="category" defaultValue={product?.category} placeholder="Category" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </div>
                             <div>
                                 <label className="text-gray-700 dark:text-gray-200">Warranty</label>
-                                <input required name="warranty" placeholder="warranty" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                                <input required name="warranty" defaultValue={product?.warranty} placeholder="warranty" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </div>
                             <div>
                                 <label className="text-gray-700 dark:text-gray-200">Short Description</label>
-                                <input required name="description" placeholder="Short Description" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                                <input required name="description" defaultValue={product?.description} placeholder="Short Description" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </div>
                         </div>
                         <div className="flex mt-6">

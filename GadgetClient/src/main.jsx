@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <Practice />,
       },
       {
-        path:"/UpdatePage",
+        path:"/UpdatePage/:id",
         element:<UpdatePage/>
       }
      
