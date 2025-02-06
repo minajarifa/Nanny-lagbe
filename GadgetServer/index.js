@@ -57,7 +57,7 @@ async function run() {
       }
       const result = await productsCollection.updateOne(id,data);
       console.log(result)
-      // res.send(result);
+      res.send(result);
     });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"

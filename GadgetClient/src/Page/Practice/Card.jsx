@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 export default function Card() {
     const [products, setProducts] = useState([])
     useEffect(() => {
-        fetch("http://localhost:5000/GetProducts", {
+        fetch("http://localhost:5000/allProducts", {
             method: "GET"
         })
             .then(response => response.json())
@@ -27,13 +27,16 @@ export default function Card() {
                         products?.map(product => (
                             <div key={product?._id} className="flex max-w-md overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
                                 <div className="w-1/3 bg-cover">
-                                    <img className="mt-5 ml-2 rounded" src="https://i.ibb.co.com/dkJsjSr/download.jpg" alt="" />
+                                    <img className="mt-5 ml-2 rounded" src={product?.photoURL} alt="" />
                                 </div>
 
                                 <div className="w-2/3 p-4 md:p-4">
-                                    <h1 className="text-xl font-bold text-gray-800 dark:text-white">Backpack</h1>
+                                    <h1 className="text-xl font-bold text-gray-800 dark:text-white">{product?.userName}</h1>
+                                    <h1 className="text-xl font-bold text-gray-800 dark:text-white">{product?.warranty}</h1>
+                                    
 
-                                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Lorem ipsum dolor sit amet consectetur adipisicing elit In odit</p>
+                                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{product?.description} </p>
+                                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{product?.model}</p>
 
                                     <div className="flex mt-2 item-center">
                                         <svg className="w-5 h-5 text-gray-700 fill-current dark:text-gray-300" viewBox="0 0 24 24">
