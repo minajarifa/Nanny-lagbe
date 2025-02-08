@@ -14,7 +14,19 @@ export default function Card() {
                 setProducts(data)
             })
     }, [])
-    console.log("products", products)
+// delete function
+const handleDelete=(id)=>{
+    fetch(`http://localhost:5000/delete/${id}`,{
+        method:"DELETE",
+        headers:{
+            "content-type":"application/json"
+        }
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        console.log("data",data)
+    })
+}
     return (
         <div className="flex justify-center">
             <div>
@@ -66,7 +78,7 @@ export default function Card() {
                                             <Link to={`/UpdatePage/${product?._id}`}>
                                             <button className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Update to Cart</button>
                                             </Link>
-                                            <button className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Delete to Cart</button>
+                                            <button onClick={()=>handleDelete(product?._id)} className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Delete to Cart</button>
                                         </div>
                                     </div>
                                 </div>

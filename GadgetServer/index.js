@@ -7,11 +7,16 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
 
-app.use(cors());
+const corsOptions={ 
+  origin:["http://localhost:5173"],
+  credentials:true,
+  optionSuccessStatus:200
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.63qrdth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const uri = `mongodb://localhost:27017`;
-// console.log(process.env.DB_USER)
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -50,13 +55,20 @@ async function run() {
       const user = req.body;
       const id = { _id: new ObjectId(req.params.id) };
       console.log(id);
-      const data={
-        $set:{
-          ...user
-        }
-      }
-      const result = await productsCollection.updateOne(id,data);
-      console.log(result)
+      const data = {
+        $set: {
+          ...user,
+        },
+      };
+      const result = await productsCollection.updateOne(id, data);
+      console.log(result);
+      res.send(result);
+    });
+    app.delete("/delete/:id", async (req, res) => {
+      const id = { _id: new ObjectId(req.params.id) };
+      console.log("id", id);
+      const result = await productsCollection.deleteOne(id);
+      console.log("result", result);
       res.send(result);
     });
     console.log(
@@ -72,6 +84,3 @@ app.get("/", (req, res) => {
   );
 });
 app.listen(port, () => console.log(`server running or port ${port}`));
-// git add .
-// git commit -m "  "
-// git push
