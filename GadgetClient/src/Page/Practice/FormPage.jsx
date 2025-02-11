@@ -1,11 +1,13 @@
+import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth/useAuth";
+import axios from "axios";
 
 
 export default function htmlFormPage() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { user } = useAuth();
-    console.log(user)
-    const handleSumitForm = (event) => {
+    console.log(user);
+    const handleSumitForm = async (event) => {
         event.preventDefault();
         const email = user.email;
         const userName = user.displayName;
@@ -19,17 +21,29 @@ export default function htmlFormPage() {
         const warranty = form.warranty.value;
         const GadgetInfo = { name, brand, model, category, description, warranty, email, userName, photoURL }
         console.log(GadgetInfo);
-        fetch('http://localhost:5000/products', {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(GadgetInfo)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-            })
+        try {
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/products`, GadgetInfo)
+            console.log(data)
+            if (data?.acknowledged === true) {
+                Swal.fire("Post Successfully");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        // fetch('http://localhost:5000/products', {
+        //     method: "POST",
+        //     headers: {
+        //         "content-type": "application/json"
+        //     },
+        //     body: JSON.stringify(GadgetInfo)
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         if(data.acknowledged=== true){
+        //               Swal.fire("Post Successfully");
+        //         }
+        //         console.log(data)
+        //     })
     }
     return (
         <div className="my-10">

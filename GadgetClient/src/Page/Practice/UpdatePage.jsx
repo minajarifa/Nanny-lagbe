@@ -1,19 +1,27 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
+import Swal from 'sweetalert2'
 
 
 export default function UpdatePage() {
     const { id } = useParams();
     const [product, setProduct] = useState();
     useEffect(() => {
-        fetch(`http://localhost:5000/singleProduct/${id}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                setProduct(data)
-            })
+        const getData = async () => {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/singleProduct/${id}`)
+            setProduct(data)
+            console.log("data", data)
+        }
+        getData()
+        // fetch(`http://localhost:5000/singleProduct/${id}`)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data)
+        //         setProduct(data)
+        //     })
     }, [id])
-    const handleUpadteSumitForm = (event) => {
+    const handleUpadteSumitForm = async (event) => {
         event.preventDefault();
         const form = event.target;
         const name = form.name.value;
@@ -22,19 +30,31 @@ export default function UpdatePage() {
         const category = form.category.value;
         const description = form.description.value;
         const warranty = form.warranty.value;
-        const GadgetInfo = { name, brand, model, category, description, warranty}
+        const GadgetInfo = { name, brand, model, category, description, warranty }
         console.log(GadgetInfo);
-        fetch(`http://localhost:5000/updateProduct/${product?._id}`, {
-            method: "PUT",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(GadgetInfo)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-            })
+        try {
+            const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/updateProduct/${product._id}`,GadgetInfo)
+            console.log(data)
+            if(data.modifiedCount===1){
+                  Swal.fire("Updated Successfully");
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        // fetch(`http://localhost:5000/updateProduct/${product?._id}`, {
+        //     method: "PUT",
+        //     headers: {
+        //         "content-type": "application/json"
+        //     },
+        //     body: JSON.stringify(GadgetInfo)
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data)
+        //         if(data.acknowledged===true){
+        //             Swal.fire("Post Successfully");
+        //         }
+        //     })
     }
     return (
         <div>

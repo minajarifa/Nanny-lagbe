@@ -1,4 +1,4 @@
-import { Link, 
+import { Link, useNavigate, 
     // useLocation, useNavigate
  } from "react-router-dom";
 import SocialLogin from "../../SimpleComponents/SociaLogin/SocialLogin";
@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet-async";
 import Swal from 'sweetalert2'
 
 const Login = () => {
+    const navigate=useNavigate()
     const { signIn } = useAuth();
     // const navigate = useNavigate();
     // const location = useLocation();
@@ -35,6 +36,7 @@ const Login = () => {
                 });
                 // end
             })
+            navigate('/')
     }
     // const handleLoginSubmit = (event) => {
     //     event.preventDefault();

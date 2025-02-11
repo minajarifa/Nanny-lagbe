@@ -5,15 +5,13 @@ import useAuth from "../../Hooks/useAuth/useAuth";
 
 const Navber = () => {
     const { logOut, user } = useAuth();
-   
+
 
 
     const Navigate =
         <>
             <Link className="m-2" to="/">Home</Link>
             <Link className="m-2" to="/Practice">Practice</Link>
-            <Link className="m-2" to="/Login">Login</Link>
-            <Link className="m-2" to="/Register">Register</Link>
             <p className="m-2">{user?.displayName}</p>
         </>
     return (
@@ -50,7 +48,7 @@ const Navber = () => {
                 </div>
                 <div className="navbar-end">
                     {/* profile start */}
-                    <div className="dropdown dropdown-end">
+                    {user ? <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img
@@ -70,7 +68,8 @@ const Navber = () => {
                             <li><a>Settings</a></li>
                             <button onClick={() => logOut()}>Logout</button>
                         </ul>
-                    </div>
+                    </div> : <div><Link className="m-2" to="/Login">Login</Link>
+                        <Link className="m-2" to="/Register">Register</Link> </div>}
                     {/* profile end */}
                 </div>
             </div>

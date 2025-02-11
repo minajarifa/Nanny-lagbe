@@ -12,7 +12,6 @@ const corsOptions={
   credentials:true,
   optionSuccessStatus:200
 }
-
 app.use(cors(corsOptions));
 app.use(express.json());
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.63qrdth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -54,21 +53,18 @@ async function run() {
     app.put("/updateProduct/:id", async (req, res) => {
       const user = req.body;
       const id = { _id: new ObjectId(req.params.id) };
-      console.log(id);
       const data = {
         $set: {
           ...user,
         },
       };
       const result = await productsCollection.updateOne(id, data);
-      console.log(result);
       res.send(result);
     });
     app.delete("/delete/:id", async (req, res) => {
       const id = { _id: new ObjectId(req.params.id) };
-      console.log("id", id);
       const result = await productsCollection.deleteOne(id);
-      console.log("result", result);
+      return
       res.send(result);
     });
     console.log(
