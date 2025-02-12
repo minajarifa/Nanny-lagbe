@@ -7,11 +7,11 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
 
-const corsOptions={ 
-  origin:["http://localhost:5173"],
-  credentials:true,
-  optionSuccessStatus:200
-}
+const corsOptions = {
+  origin: ["http://localhost:5173"],
+  credentials: true,
+  optionSuccessStatus: 200,
+};
 app.use(cors(corsOptions));
 app.use(express.json());
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.63qrdth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -28,7 +28,14 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const productsCollection = client.db("conceptual").collection("products");
-    const usersCollection = client.db("conceptual").collection("users");
+    const usersCollection = client.db("conceptual").collection("usersData");
+    // const nannyCollection=client.db("conceptual").collection()
+    // add user data to post
+    app.post("/userData", async (req, res) => {
+      const user = req.body;
+      const result = usersCollection.insertOne(user);
+      res.send(result);
+    });
     // FormPage to add post
     app.post("/products", async (req, res) => {
       const result = await productsCollection.insertOne(req.body);
@@ -64,7 +71,7 @@ async function run() {
     app.delete("/delete/:id", async (req, res) => {
       const id = { _id: new ObjectId(req.params.id) };
       const result = await productsCollection.deleteOne(id);
-      return
+      return;
       res.send(result);
     });
     console.log(

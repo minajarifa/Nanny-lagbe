@@ -50,8 +50,7 @@ const Login = () => {
     return (
         <div className="flex items-center justify-center">
             <Helmet>
-                <title>sample | Login</title>
-
+                <title>sample || Login</title>
             </Helmet>
             <div className="w-full max-w-sm shadow-2xl card bg-base-100 shrink-0">
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body">

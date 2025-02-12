@@ -16,30 +16,41 @@ import { HelmetProvider } from 'react-helmet-async';
 import Practice from './Page/Practice/Practice.jsx';
 import UpdatePage from './Page/Practice/UpdatePage.jsx';
 import PrivateRouter from './Page/PrivateRoute/PrivateRoute.jsx';
+import ServicesPage from './Page/ServicesPage/ServicesPage.jsx';
+import AboutUs from './Page/AboutUs/AboutUs.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
-        element: <Home/>,
+        element: <Home />,
       },
       {
         path: "/Practice",
-        element: <Practice/>,
+        element: <Practice />,
       },
       {
-        path:"/UpdatePage/:id",
-        element:<PrivateRouter>
-          <UpdatePage/>
+        path: "/UpdatePage/:id",
+        element: <PrivateRouter>
+          <UpdatePage />
         </PrivateRouter>
       }
-     
+      , {
+        path: "/ServicesPage",
+        element: <ServicesPage />
+      },
+      {
+        path: "/AboutUs",
+        element:<AboutUs />
+      }
+
     ],
   },
+  
   {
     path: "/Login",
     element: <Login />,

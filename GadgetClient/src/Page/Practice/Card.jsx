@@ -2,13 +2,16 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import axios from 'axios';
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth/useAuth";
 
 
 export default function Card() {
+    const {user}=useAuth()
+    console.log(user)
     const [products, setProducts] = useState([])
     useEffect(() => {
         const getData = async () => {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/allProducts`)
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/userProducts/${user?.email}`)
             setProducts(data)
         }
         getData()
@@ -20,7 +23,7 @@ export default function Card() {
         //         console.log(data)
         //         setProducts(data)
         //     })
-    }, [])
+    }, [user])
     // delete function
     const handleDelete = async (id) => {
         // try {
