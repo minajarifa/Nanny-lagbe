@@ -29,13 +29,20 @@ async function run() {
   try {
     const productsCollection = client.db("conceptual").collection("products");
     const usersCollection = client.db("conceptual").collection("usersData");
+    const postCollection= client.db("conceptual").collection("post")
     // const nannyCollection=client.db("conceptual").collection()
+    // _____________________usersCollection______________________
     // add user data to post
     app.post("/userData", async (req, res) => {
       const user = req.body;
       const result = usersCollection.insertOne(user);
       res.send(result);
     });
+    app.get("/usersData",async(req,res)=>{
+      const result = await usersCollection.find().toArray();
+      res.send(result);
+    })
+    // _____________________________________________
     // FormPage to add post
     app.post("/products", async (req, res) => {
       const result = await productsCollection.insertOne(req.body);

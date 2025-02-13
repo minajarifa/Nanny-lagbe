@@ -41,7 +41,10 @@ const Navber = () => {
                             {Navigate}
                         </ul>
                     </div>
-                    <a className="text-xl btn btn-ghost">Gadget Shop</a>
+                    <a className="text-3xl font-bold btn btn-ghost">
+                        {/* Gadget Shop */}
+                        Nanny Lagbe
+                        </a>
                 </div>
                 <div className="hidden navbar-center lg:flex">
                     <ul className="px-1 menu menu-horizontal">
