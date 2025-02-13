@@ -18,6 +18,8 @@ import UpdatePage from './Page/Practice/UpdatePage.jsx';
 import PrivateRouter from './Page/PrivateRoute/PrivateRoute.jsx';
 import ServicesPage from './Page/ServicesPage/ServicesPage.jsx';
 import AboutUs from './Page/AboutUs/AboutUs.jsx';
+import NannyDashboard from './Page/NanyDashboard/NannyDashboard/NannyDashboard.jsx';
+import NannyProfile from './Page/NanyDashboard/NannyProfile/NannyProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -51,13 +53,13 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/",
-    element: <App />,
+    path: "/NannyDashboard",
+    element: <NannyDashboard />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
-        element: <Home />,
+        path: "/NannyDashboard/NannyProfile",
+        element: <NannyProfile />,
       },
      
 
