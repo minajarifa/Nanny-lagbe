@@ -38,8 +38,15 @@ async function run() {
       const result = usersCollection.insertOne(user);
       res.send(result);
     });
+    // get all userData
     app.get("/usersData",async(req,res)=>{
       const result = await usersCollection.find().toArray();
+      res.send(result);
+    })
+    // get a userData by email
+    app.get("/usersData/:email",async(req,res)=>{
+      const email= req.params.email;
+      const result = await usersCollection.findOne({email});
       res.send(result);
     })
     // _____________________________________________

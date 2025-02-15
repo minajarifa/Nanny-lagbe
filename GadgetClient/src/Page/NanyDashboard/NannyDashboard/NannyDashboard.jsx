@@ -3,9 +3,13 @@ import Sideber from "../../Navber/Sideber";
 
 export default function NannyDashboard() {
   return (
-    <div>
+    <div className="flex ">
+      <div className="top-0 left-0 w-64 h-screen">
         <Sideber/>
+      </div>
+        <div className="w-full m-10">
         <Outlet/>
+        </div>
     </div>
   )
 }

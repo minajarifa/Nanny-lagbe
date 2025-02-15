@@ -15,6 +15,7 @@ const Navber = () => {
             <Link className="m-2" to="/ServicesPage">Services Page</Link>
             <Link className="m-2" to="/AboutUs">About Us</Link>
             <p className="m-2">{user?.displayName}</p>
+            
         </>
     return (
         <div>
@@ -69,6 +70,7 @@ const Navber = () => {
                             </Link>
                             
                             <button onClick={() => logOut()}>Logout</button>
+                            <input type="checkbox" value="synthwave" className="toggle theme-controller" />
                         </ul>
                     </div> : <div><Link className="m-2" to="/Login">Login</Link>
                         <Link className="m-2" to="/Register">Register</Link> </div>}

@@ -20,6 +20,7 @@ import ServicesPage from './Page/ServicesPage/ServicesPage.jsx';
 import AboutUs from './Page/AboutUs/AboutUs.jsx';
 import NannyDashboard from './Page/NanyDashboard/NannyDashboard/NannyDashboard.jsx';
 import NannyProfile from './Page/NanyDashboard/NannyProfile/NannyProfile.jsx';
+import AddPost from './Page/NanyDashboard/AddPost/AddPost.jsx';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,14 @@ const router = createBrowserRouter([
       {
         path: "/NannyDashboard/NannyProfile",
         element: <NannyProfile />,
+      },
+      {
+        path: "/NannyDashboard/NannyProfile",
+        element: <NannyProfile />,
+      },
+      {
+        path: "/NannyDashboard/AddPost",
+        element: <AddPost />,
       },
      
 

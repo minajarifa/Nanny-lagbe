@@ -5,16 +5,16 @@ import Navber from './Page/Navber/Navber'
 import Footer from './ExtraComponents/Footer'
 
 function App() {
- 
+
 
   return (
     <>
       <div className=''>
         <Navber/>
-      <Outlet/>
-      <Footer/>
+        <Outlet/>
+        <Footer/>
       </div>
-     
+
     </>
   )
 }
