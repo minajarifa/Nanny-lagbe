@@ -1,11 +1,23 @@
 import { useForm } from "react-hook-form"
-
+import useAuth from "../../../Hooks/useAuth/useAuth";
+import axios from 'axios';
 export default function AddPost() {
-    const { register, handleSubmit } = useForm()
-    const onSubmit = (data) => {
+    const { user } = useAuth();
+    const { register, handleSubmit, formState: { errors }, } = useForm()
+
+    const onSubmit = async (data) => {
+        const { age, experience, languages, location, name, phoneNoumber, skills, userName, email } = data;
         console.log(data);
+        try {
+            const { getData } = await axios.post(`${import.meta.env.VITE_API_URL}/nannyCollection`, data)
+            console.log(getData)
+        } catch (error) {
+            console.log(error)
+        }
     }
-    return (
+    return (<div>
+
+        <h1 className="text-3xl text-center">Add a post</h1>
         <div className="w-full hero-content">
             <div className="w-full bg-purple-200 shadow-2xl card shrink-0">
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full card-body">
@@ -14,25 +26,30 @@ export default function AddPost() {
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
-                            <input type="text" {...register("name")} placeholder="Your Name" className="input input-bordered" required />
+                            <input defaultValue={user?.displayName} type="text" {...register("name", { required: true })} placeholder="Your Name" className="input input-bordered" />
+                            {errors.name && <span className="text-red-600">This field is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Age</span>
                             </label>
-                            <input type="text" {...register("age")} placeholder="Your Age" className="input input-bordered" required />
+                            <input type="text" {...register("age", { required: true })} placeholder="Your Age" className="input input-bordered" />
+                            {errors.age && <span className="text-red-600">This field is required</span>}
+
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">location</span>
                             </label>
-                            <input type="text" {...register("location")} placeholder="location" className="input input-bordered" required />
+                            <input type="text" {...register("location", { required: true })} placeholder="location" className="input input-bordered" />
+                            {errors.location && <span className="text-red-600">This field is required</span>}
+
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">experience</span>
                             </label>
-                            <select {...register("experience")} type="text" placeholder="experience" className="input input-bordered">
+                            <select {...register("experience", { required: true })} type="text" placeholder="experience" className="input input-bordered">
                                 <option value="">experience</option>
                                 <option value="6 Month">6 Month</option>
                                 <option value="1 years">1 years</option>
@@ -42,12 +59,14 @@ export default function AddPost() {
                                 <option value="5 years">5 years</option>
                                 <option value="6 years">6 years</option>
                             </select>
+                            {errors.experience && <span className="text-red-600">This field is required</span>}
+
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Skills</span>
                             </label>
-                            <select {...register("skills")} type="text" placeholder="experience" className="input input-bordered">
+                            <select {...register("skills", { required: true })} type="text" placeholder="experience" className="input input-bordered">
                                 <option value="">experience</option>
                                 <option value="Arts & Crafts">Arts & Crafts</option>
                                 <option value="Outdoor Activities">Outdoor Activities</option>
@@ -58,24 +77,30 @@ export default function AddPost() {
                                 <option value="Light Housekeeping">Light Housekeeping</option>
                                 <option value="Infant Care">Infant Care</option>
                             </select>
+                            {errors.skills && <span className="text-red-600">This field is required</span>}
+
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">contact</span>
                             </label>
-                            <input type="email" {...register("email")} placeholder="Email" className="input input-bordered" required />
+                            <input type="email" defaultValue={user?.email} {...register("email", { required: true })} placeholder="Email" className="input input-bordered" />
+                            {errors.email && <span className="text-red-600">This field is required</span>}
+
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">contact</span>
                             </label>
-                            <input type="number" {...register("phoneNoumber")} placeholder="Phone Number" className="input input-bordered" required />
+                            <input type="number" {...register("phoneNoumber", { required: true })} placeholder="Phone Number" className="input input-bordered" />
+                            {errors.phoneNoumber && <span className="text-red-600">This field is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">languages</span>
                             </label>
-                            <input type="text" {...register("languages")} placeholder="languages" className="input input-bordered" required />
+                            <input type="text" {...register("languages", { required: true })} placeholder="languages" className="input input-bordered" />
+                            {errors.languages && <span className="text-red-600">This field is required</span>}
                         </div>
                         {/* <div className="form-control">
                             <label className="label">
@@ -90,5 +115,7 @@ export default function AddPost() {
                 </form>
             </div>
         </div>
+    </div>
+
     )
 }

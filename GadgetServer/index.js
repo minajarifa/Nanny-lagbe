@@ -29,7 +29,7 @@ async function run() {
   try {
     const productsCollection = client.db("conceptual").collection("products");
     const usersCollection = client.db("conceptual").collection("usersData");
-    const postCollection= client.db("conceptual").collection("post")
+    const postCollection = client.db("conceptual").collection("post");
     // const nannyCollection=client.db("conceptual").collection()
     // _____________________usersCollection______________________
     // add user data to post
@@ -39,16 +39,27 @@ async function run() {
       res.send(result);
     });
     // get all userData
-    app.get("/usersData",async(req,res)=>{
+    app.get("/usersData", async (req, res) => {
       const result = await usersCollection.find().toArray();
       res.send(result);
-    })
+    });
     // get a userData by email
-    app.get("/usersData/:email",async(req,res)=>{
-      const email= req.params.email;
-      const result = await usersCollection.findOne({email});
+    app.get("/usersData/:email", async (req, res) => {
+      const email = req.params.email;
+      const result = await usersCollection.findOne({ email });
       res.send(result);
-    })
+    });
+    // _____________________________________________
+    // __________________postCollection_____________
+
+    app.post("/nannyCollection", async (req, res) => {
+      const user = req.body;
+      console.log(user)
+      const result = await postCollection.insertOne(user);
+      console.log(result)
+      // res.send(result)
+    });
+
     // _____________________________________________
     // FormPage to add post
     app.post("/products", async (req, res) => {

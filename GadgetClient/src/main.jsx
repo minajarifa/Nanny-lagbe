@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/AboutUs",
-        element:<AboutUs />
+        element: <AboutUs />
       }
 
     ],
@@ -68,13 +68,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/NannyDashboard/AddPost",
-        element: <AddPost />,
+        element: (
+          <PrivateRouter>
+            <AddPost />
+          </PrivateRouter>
+        ),
       },
-     
+
 
     ],
   },
-  
+
   {
     path: "/Login",
     element: <Login />,
