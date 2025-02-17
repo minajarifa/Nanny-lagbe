@@ -54,10 +54,16 @@ async function run() {
 
     app.post("/nannyCollection", async (req, res) => {
       const user = req.body;
-      console.log(user)
+      console.log(user);
       const result = await postCollection.insertOne(user);
-      console.log(result)
-      // res.send(result)
+      console.log(result);
+      res.send(result);
+    });
+    app.get("/nannyCollection/:email", async (req, res) => {
+      const email = req.params.email;
+      console.log(email);
+      const result = await postCollection.find(email).toArray();
+      res.send(result);
     });
 
     // _____________________________________________
@@ -108,7 +114,7 @@ async function run() {
 run().catch(console.dir);
 app.get("/", (req, res) => {
   res.send(
-    "You successfully connected to MongoDB! Hello from tutore server........"
+    "You successfully connected to MongoDB! Hello from Nanny Lagbe........"
   );
 });
 app.listen(port, () => console.log(`server running or port ${port}`));

@@ -21,6 +21,7 @@ import AboutUs from './Page/AboutUs/AboutUs.jsx';
 import NannyDashboard from './Page/NanyDashboard/NannyDashboard/NannyDashboard.jsx';
 import NannyProfile from './Page/NanyDashboard/NannyProfile/NannyProfile.jsx';
 import AddPost from './Page/NanyDashboard/AddPost/AddPost.jsx';
+import MyPosts from './Page/NanyDashboard/MyPosts/MyPosts.jsx';
 
 const router = createBrowserRouter([
   {
@@ -63,8 +64,8 @@ const router = createBrowserRouter([
         element: <NannyProfile />,
       },
       {
-        path: "/NannyDashboard/NannyProfile",
-        element: <NannyProfile />,
+        path: "/NannyDashboard/MyPosts",
+        element: <MyPosts />,
       },
       {
         path: "/NannyDashboard/AddPost",

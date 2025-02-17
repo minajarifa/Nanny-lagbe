@@ -9,7 +9,7 @@ import useAuth from "../../Hooks/useAuth/useAuth";
 export default function Sideber() {
     const { user } = useAuth();
     return (
-        <div className="bg-purple-200">
+        <div className="fixed h-full bg-purple-200">
             <aside className="flex flex-col w-64 px-4 py-8 overflow-y-auto border-r rtl:border-r-0 rtl:border-l dark:border-gray-700">
                 <Link to="/" className="flex justify-center">
                     <img className="w-auto h-6 rounded sm:h-7" src="../../../public/download.png" alt=""/>
@@ -24,7 +24,7 @@ export default function Sideber() {
                             <CgProfile className="text-xl"/>
                             <span className="mx-4 font-medium">My Accounts</span>
                         </Link>
-                        <Link className="flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform rounded-md ">
+                        <Link to="/NannyDashboard/MyPosts" className="flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform rounded-md ">
                             <MdOutlinePostAdd className="text-xl"/>
                             <span className="mx-4 font-medium">My Posts</span>
                         </Link>
