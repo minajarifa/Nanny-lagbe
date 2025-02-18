@@ -7,12 +7,11 @@ export default function AddPost() {
     const { register, handleSubmit, formState: { errors }, } = useForm()
 
     const onSubmit = async (data) => {
-        const { age, experience, languages, location, name, phoneNoumber, skills, userName, email } = data;
         console.log(data);
         try {
-            const  getData  = await axios.post(`${import.meta.env.VITE_API_URL}/nannyCollection`, data)
+            const getData = await axios.post(`${import.meta.env.VITE_API_URL}/nannyCollection`, data)
             console.log(getData)
-            if(getData.data.acknowledged===true){
+            if (getData.data.acknowledged === true) {
                 Swal.fire("Posted successfully");
             }
         } catch (error) {
@@ -21,17 +20,25 @@ export default function AddPost() {
     }
     return (<div>
 
-        <h1 className="text-3xl text-center ">Add a post</h1>
+        <h1 className="ml-20 text-3xl text-center">Add a post</h1>
         <div className="w-full hero-content">
             <div className="w-full bg-purple-200 shadow-2xl card shrink-0">
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full card-body">
-                    <div className="grid grid-cols-2 gap-5">
+                    <div className="grid gap-5 lg:grid-cols-2">
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
                             <input defaultValue={user?.displayName} type="text" {...register("name", { required: true })} placeholder="Your Name" className="input input-bordered" />
                             {errors.name && <span className="text-red-600">This field is required</span>}
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Email</span>
+                            </label>
+                            <input defaultValue={user.email} type="email" {...register("email", { required: true })} placeholder="your email" className="input input-bordered" />
+                            {errors.email && <span className="text-red-600">This field is required</span>}
+
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -92,7 +99,7 @@ export default function AddPost() {
                             {errors.skills && <span className="text-red-600">This field is required</span>}
 
                         </div>
-                       
+
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">contact</span>
@@ -107,12 +114,14 @@ export default function AddPost() {
                             <input type="text" {...register("languages", { required: true })} placeholder="languages" className="input input-bordered" />
                             {errors.languages && <span className="text-red-600">This field is required</span>}
                         </div>
-                        {/* <div className="form-control">
+                        <div className="form-control">
                             <label className="label">
-                                <span className="label-text">profile_picture</span>
+                                <span className="label-text">duty</span>
                             </label>
-                            <input type="text" {...register("profile_picture")}  placeholder="profile_picture" className="input input-bordered" required />
-                        </div> */}
+                            <input type="text" {...register("duty")} placeholder="dyty time" className="input input-bordered" required />
+                            {errors.duty && <span className="text-red-600">This field is required</span>}
+
+                        </div>
                     </div>
                     <div className="mt-6 form-control">
                         <button className="bg-purple-400 btn">Login</button>

@@ -6,7 +6,7 @@ export default function NannyProfile() {
   const { user } = useAuth()
   useEffect(() => {
     getData()
-  }, [user])
+  }, [])
   const getData = async () => {
     const { data } = await axios(`${import.meta.env.VITE_API_URL}/usersData/${user?.email}`);
     setUserData(data)
@@ -14,7 +14,7 @@ export default function NannyProfile() {
   
   console.log(userData)
   return (
-    <div className="">
+    <div className="ml-10">
       <div className="w-full max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <img className="object-cover w-full h-56" src={user?.photoURL} alt="avatar" />
 
