@@ -35,6 +35,7 @@ export default function Updated() {
             const data = await axios.put(`${import.meta.env.VITE_API_URL}/nannyCollection/${post._id}`,postInfo)
             if(data.data.acknowledged===true){
                  Swal.fire("Posted successfully");
+                 getData()
             }
         } catch (error) {
             console.log(error)
@@ -51,7 +52,7 @@ export default function Updated() {
                                 <label className="label">
                                     <span className="label-text">Education</span>
                                 </label>
-                                <input type="text" name="education" placeholder="education" className="input input-bordered" defaultValue={post.education} />
+                                <input type="text" name="education" placeholder="education" className="input input-bordered" defaultValue={post.education} required/>
                             </div>
                             <div className="form-control">
                                 <label className="label">
@@ -63,13 +64,13 @@ export default function Updated() {
                                 <label className="label">
                                     <span className="label-text">location</span>
                                 </label>
-                                <input type="text" name="location" defaultValue={post.location} placeholder="location" className="input input-bordered" />
+                                <input type="text" name="location" defaultValue={post.location} placeholder="location" className="input input-bordered" required/>
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">experience</span>
                                 </label>
-                                <select name="experience" value={post.experience} type="text" placeholder="experience" className="input input-bordered">
+                                <select name="experience" value={post.experience} type="text" placeholder="experience" className="input input-bordered" required>
                                     <option value="">experience</option>
                                     <option value="6 Month">6 Month</option>
                                     <option value="1 years">1 years</option>
@@ -84,7 +85,7 @@ export default function Updated() {
                                 <label className="label">
                                     <span className="label-text">Skills</span>
                                 </label>
-                                <select name="skills" value={post.skills} type="text" placeholder="Skills" className="input input-bordered">
+                                <select name="skills" value={post.skills} type="text" placeholder="Skills" className="input input-bordered" required>
                                     <option value="">Skills</option>
                                     <option value="Arts & Crafts">Arts & Crafts</option>
                                     <option value="Outdoor Activities">Outdoor Activities</option>
@@ -99,12 +100,12 @@ export default function Updated() {
                                 <label className="label">
                                     <span className="label-text">contact</span>
                                 </label>
-                                <input name="phoneNoumber" type="number" defaultValue={post.phoneNoumber} placeholder="Phone Number" className="input input-bordered" />                            </div>
+                                <input name="phoneNoumber" type="number" defaultValue={post.phoneNoumber} placeholder="Phone Number" className="input input-bordered" required/>                            </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">languages</span>
                                 </label>
-                                <input type="text" name="languages" defaultValue={post.languages} placeholder="languages" className="input input-bordered" />                            </div>
+                                <input type="text" name="languages" defaultValue={post.languages} placeholder="languages" className="input input-bordered" required/>                            </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">duty</span>

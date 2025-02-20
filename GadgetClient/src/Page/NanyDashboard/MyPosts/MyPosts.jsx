@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function MyPosts() {
     const { user } = useAuth();
-   
+
     const [posts, setPosts] = useState();
     useEffect(() => {
         const getData = async () => {
@@ -17,6 +17,7 @@ export default function MyPosts() {
     console.log(posts)
     return (
         <div className="grid gap-5 ml-10 lg:grid-cols-2">
+            {posts?.length < 1 && <p className="text-xl text-center">Loading...</p>}
             {
                 posts?.map(post => (
                     <div key={post?._id} className="max-w-2xl overflow-hidden rounded-lg shadow-md dark:bg-gray-800 ">
@@ -36,7 +37,7 @@ export default function MyPosts() {
                                     <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">21 SEP 2015</span>
                                 </div>
                                 <Link to={`/NannyDashboard/PostDetails/${post._id}`} className="btn btn-active btn-neutral">Show details</Link>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 ))

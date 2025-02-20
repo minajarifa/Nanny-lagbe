@@ -68,7 +68,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/NannyDashboard/MyPosts",
-        element: <MyPosts />,
+        element: <PrivateRouter>
+          <MyPosts />,
+        </PrivateRouter>
       },
       {
         path: "/NannyDashboard/AddPost",
