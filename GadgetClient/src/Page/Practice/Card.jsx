@@ -6,24 +6,16 @@ import useAuth from "../../Hooks/useAuth/useAuth";
 
 
 export default function Card() {
-    const {user}=useAuth()
+    const { user } = useAuth()
     console.log(user)
     const [products, setProducts] = useState([])
     useEffect(() => {
-        const getData = async () => {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/userProducts/${user?.email}`)
-            setProducts(data)
-        }
         getData()
-        // fetch("http://localhost:5000/allProducts", {
-        //     method: "GET"
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data)
-        //         setProducts(data)
-        //     })
     }, [user])
+    const getData = async () => {
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/userProducts/${user?.email}`)
+        setProducts(data)
+    }
     // delete function
     const handleDelete = async (id) => {
         // try {
@@ -31,20 +23,8 @@ export default function Card() {
         console.log(data)
         if (data.deletedCount === 1) {
             Swal.fire("Post Successfully");
+            getData();
         }
-        // } catch (error) {
-        //     console.log(error)
-        // }
-        // fetch(`http://localhost:5000/delete/${id}`, {
-        //     method: "DELETE",
-        //     headers: {
-        //         "content-type": "application/json"
-        //     }
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log("data", data)
-        //     })
     }
     return (
         <div className="flex justify-center">

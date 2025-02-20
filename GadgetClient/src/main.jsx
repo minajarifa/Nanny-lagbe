@@ -23,6 +23,8 @@ import NannyProfile from './Page/NanyDashboard/NannyProfile/NannyProfile.jsx';
 import AddPost from './Page/NanyDashboard/AddPost/AddPost.jsx';
 import MyPosts from './Page/NanyDashboard/MyPosts/MyPosts.jsx';
 import PostDetails from './Page/NanyDashboard/MyPosts/PostDetails.jsx';
+import SettingsPosts from './Page/NanyDashboard/SettingsPosts/SettingsPosts.jsx';
+import Updated from './Page/NanyDashboard/AddPost/Updated.jsx';
 
 const router = createBrowserRouter([
   {
@@ -81,6 +83,22 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <PostDetails />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/NannyDashboard/SettingsPosts",
+        element: (
+          <PrivateRouter>
+            <SettingsPosts />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/NannyDashboard/Updated/:id",
+        element: (
+          <PrivateRouter>
+            <Updated />
           </PrivateRouter>
         ),
       },

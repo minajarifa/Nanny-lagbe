@@ -1,11 +1,12 @@
 
 import { useParams } from "react-router-dom"
 import useAuth from "../../../Hooks/useAuth/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function PostDetails() {
   const { user } = useAuth();
+  const [post, setPost] = useState()
   const { id } = useParams();
   console.log(id);
   // console.log(import.meta.env.VITE_API_URL)
@@ -13,25 +14,30 @@ export default function PostDetails() {
     const getData = async () => {
       const { data } = await axios(`${import.meta.env.VITE_API_URL}/nanny/${id}`)
       console.log(data)
+      setPost(data)
     }
-  getData()
+    getData()
   }, [id])
 
   return (
     <div className="m-10">
-      <div className="min-h-screen hero bg-base-200">
-        <div className="flex-col hero-content lg:flex-row-reverse">
+      <div className="shadow-xl card card-side bg-base-100">
+        <figure>
           <img
             src={user?.photoURL || "https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"}
-            className="max-w-sm rounded-lg shadow-2xl" />
-          <div>
-            <h1 className="text-5xl font-bold">Box Office News!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.
-            </p>
-            <button className="btn btn-primary">Get Started</button>
-          </div>
+            alt="Movie" />
+        </figure>
+        <div className="card-body">
+          <h2 className="text-xl card-title">{post?.name}'s post Detaills</h2>
+          
+          <p><span> Age</span> : {post?.age}</p>
+          <p>Email : {post?.email}</p>
+          <p>Duty : {post?.duty}</p>
+          <p>Education : {post?.education}</p>
+          <p>Experience : {post?.experience}</p>
+          <p>Languages : {post?.languages}</p>
+          <p>Phone Number : {post?.phoneNoumber}</p>
+          <p>Skills : {post?.skills}</p>
         </div>
       </div>
     </div>

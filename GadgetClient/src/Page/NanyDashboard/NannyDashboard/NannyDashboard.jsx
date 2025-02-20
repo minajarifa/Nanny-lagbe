@@ -7,7 +7,7 @@ export default function NannyDashboard() {
       <div className="top-0 left-0 w-64 h-screen">
         <Sideber/>
       </div>
-        <div className="w-full m-10">
+        <div className="w-full m-20">
         <Outlet/>
         </div>
     </div>

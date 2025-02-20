@@ -14,8 +14,8 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.63qrdth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-// const uri = `mongodb://localhost:27017`;
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.63qrdth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb://localhost:27017`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -54,9 +54,7 @@ async function run() {
 
     app.post("/nannyCollection", async (req, res) => {
       const user = req.body;
-      console.log(user);
       const result = await postCollection.insertOne(user);
-      console.log(result);
       res.send(result);
     });
     app.get("/nannyCollection", async (req, res) => {
@@ -71,8 +69,27 @@ async function run() {
     app.get("/nanny/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
-      const result =await postCollection.findOne(query);
+      const result = await postCollection.findOne(query);
       res.send(result);
+    });
+    app.delete("/postDelete/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await postCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    app.put("/nannyCollection/:id", async (req, res) => {
+      const user = req.body;
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const data = {
+        $set: {
+          ...user,
+        },
+      };
+      const result = await postCollection.updateOne(query, data);
+       res.send(result)
     });
 
     // _____________________________________________

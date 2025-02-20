@@ -32,7 +32,7 @@ export default function Sideber() {
                             <FaPen className="text-xl" />
                             <span className="mx-4 font-medium">Add a post</span>
                         </Link>
-                        <Link className="flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform rounded-md ">
+                        <Link  to="/NannyDashboard/SettingsPosts" className="flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform rounded-md ">
                             <MdOutlineSettings className="text-xl" />
                             <span className="mx-4 font-medium">Settings</span>
                         </Link>
