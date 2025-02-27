@@ -13,8 +13,6 @@ import ErrorPage from './Page/ErrorPage/ErrorPage.jsx';
 import Home from './Page/Home/Home.jsx';
 import AuthProvider from './AuthProvider/AuthProvider.jsx';
 import { HelmetProvider } from 'react-helmet-async';
-import Practice from './Page/Practice/Practice.jsx';
-import UpdatePage from './Page/Practice/UpdatePage.jsx';
 import PrivateRouter from './Page/PrivateRoute/PrivateRoute.jsx';
 import ServicesPage from './Page/ServicesPage/ServicesPage.jsx';
 import AboutUs from './Page/AboutUs/AboutUs.jsx';
@@ -25,6 +23,7 @@ import MyPosts from './Page/NanyDashboard/MyPosts/MyPosts.jsx';
 import PostDetails from './Page/NanyDashboard/MyPosts/PostDetails.jsx';
 import SettingsPosts from './Page/NanyDashboard/SettingsPosts/SettingsPosts.jsx';
 import Updated from './Page/NanyDashboard/AddPost/Updated.jsx';
+import ServicesCommentPage from './Page/ServicesPage/ServicesCommentPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -37,18 +36,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/Practice",
-        element: <Practice />,
-      },
-      {
-        path: "/UpdatePage/:id",
-        element: <PrivateRouter>
-          <UpdatePage />
-        </PrivateRouter>
-      }
-      , {
         path: "/ServicesPage",
         element: <ServicesPage />
+      },
+      {
+        path: "/ServicesCommentPage/:id",
+        element: <ServicesCommentPage />
       },
       {
         path: "/AboutUs",
@@ -64,7 +57,9 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/NannyDashboard/NannyProfile",
-        element: <NannyProfile />,
+        element: <PrivateRouter>
+          <NannyProfile />,
+        </PrivateRouter>
       },
       {
         path: "/NannyDashboard/MyPosts",

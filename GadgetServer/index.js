@@ -8,7 +8,11 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: [
+    "http://localhost:5173",
+    "https://gadget-shop-9b564.firebaseapp.com",
+    "https://gadget-shop-9b564.web.app",
+  ],
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -27,7 +31,6 @@ const client = new MongoClient(uri, {
 });
 async function run() {
   try {
-    const productsCollection = client.db("conceptual").collection("products");
     const usersCollection = client.db("conceptual").collection("usersData");
     const postCollection = client.db("conceptual").collection("post");
     // const nannyCollection=client.db("conceptual").collection()
@@ -35,7 +38,7 @@ async function run() {
     // add user data to post
     app.post("/userData", async (req, res) => {
       const user = req.body;
-      const result = usersCollection.insertOne(user);
+      const result = await usersCollection.insertOne(user);
       res.send(result);
     });
     // get all userData
@@ -89,48 +92,12 @@ async function run() {
         },
       };
       const result = await postCollection.updateOne(query, data);
-       res.send(result)
+      res.send(result);
     });
 
     // _____________________________________________
-    // FormPage to add post
-    app.post("/products", async (req, res) => {
-      const result = await productsCollection.insertOne(req.body);
-      res.send(result);
-    });
-    // get all post to Card Page
-    app.get("/allProducts", async (req, res) => {
-      const result = await productsCollection.find().toArray();
-      res.send(result);
-    });
-    app.get("/userProducts/:email", async (req, res) => {
-      const result = await productsCollection
-        .find({ email: req.params.email })
-        .toArray();
-      res.send(result);
-    });
-    app.get("/singleProduct/:id", async (req, res) => {
-      const id = { _id: new ObjectId(req.params.id) };
-      const result = await productsCollection.findOne(id);
-      res.send(result);
-    });
-    app.put("/updateProduct/:id", async (req, res) => {
-      const user = req.body;
-      const id = { _id: new ObjectId(req.params.id) };
-      const data = {
-        $set: {
-          ...user,
-        },
-      };
-      const result = await productsCollection.updateOne(id, data);
-      res.send(result);
-    });
-    app.delete("/delete/:id", async (req, res) => {
-      const id = { _id: new ObjectId(req.params.id) };
-      const result = await productsCollection.deleteOne(id);
-      return;
-      res.send(result);
-    });
+    
+  
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );

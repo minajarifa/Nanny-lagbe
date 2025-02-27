@@ -33,11 +33,11 @@ const AuthProvider = ({ children }) => {
 
   const signInWithGoogle = () => {
     setLoading(true)
-    return signInWithPopup(auth, googleProvider)
+    return signInWithPopup(auth, googleProvider);
   }
   const signInWithGithub = () => {
     setLoading(true)
-    return signInWithPopup(auth, githubProvider)
+    return signInWithPopup(auth, githubProvider);
   }
   const logOut = async () => {
     setLoading(true)
@@ -49,7 +49,6 @@ const AuthProvider = ({ children }) => {
       photoURL: photo,
     })
   }
-
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
@@ -73,7 +72,6 @@ const AuthProvider = ({ children }) => {
     logOut,
     updateUserProfile,
   }
-
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   )

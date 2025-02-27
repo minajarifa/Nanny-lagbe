@@ -4,12 +4,26 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 export default function AddPost() {
     const { user } = useAuth();
-    const { register, handleSubmit, formState: { errors }, } = useForm()
+    const { register, formState: { errors }, } = useForm()
 
-    const onSubmit = async (data) => {
-        console.log(data);
+    const handleAddPost = async (event) => {
+        event.preventDefault()
+        const form = event.target;
+        const name = user.displayName
+        const email = user.email
+        const photoURL = user.photoURL
+        const education = form.education.value;
+        const age = form.age.value;
+        const location = form.location.value;
+        const experience = form.experience.value;
+        const skills = form.skills.value;
+        const phoneNoumber = form.phoneNoumber.value;
+        const languages = form.languages.value;
+        const duty = form.duty.value;
+        const postInfo = { education, age, location, experience, skills, phoneNoumber, languages, duty, name, email, photoURL };
+        console.log(postInfo)
         try {
-            const getData = await axios.post(`${import.meta.env.VITE_API_URL}/nannyCollection`, data)
+            const getData = await axios.post(`${import.meta.env.VITE_API_URL}/nannyCollection`, postInfo)
             console.log(getData)
             if (getData.data.acknowledged === true) {
                 Swal.fire("Posted successfully");
@@ -23,7 +37,7 @@ export default function AddPost() {
             <h1 className="ml-20 text-3xl text-center">Add a post</h1>
             <div className="w-full hero-content">
                 <div className="w-full bg-purple-200 shadow-2xl card shrink-0">
-                    <form onSubmit={handleSubmit(onSubmit)} className="w-full card-body">
+                    <form onSubmit={handleAddPost} className="w-full card-body">
                         <div className="grid gap-5 lg:grid-cols-2">
                             <div className="form-control">
                                 <label className="label">

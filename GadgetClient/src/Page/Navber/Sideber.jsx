@@ -16,10 +16,7 @@ export default function Sideber() {
                 </Link>
                 <div className="flex flex-col justify-between flex-1 mt-6">
                     <nav>
-                        <Link to="/" className="flex items-center px-4 py-2 rounded-md ">
-                            <FaHome className="text-xl"/>
-                            <button className="mx-4 font-medium">Home</button>
-                        </Link>
+                       
                         <Link to="/NannyDashboard/NannyProfile" className="flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform rounded-md " >
                             <CgProfile className="text-xl"/>
                             <span className="mx-4 font-medium">My Accounts</span>
@@ -35,6 +32,10 @@ export default function Sideber() {
                         <Link  to="/NannyDashboard/SettingsPosts" className="flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform rounded-md ">
                             <MdOutlineSettings className="text-xl" />
                             <span className="mx-4 font-medium">Settings</span>
+                        </Link>
+                        <Link to="/" className="flex items-center px-4 py-2 rounded-md ">
+                            <FaHome className="text-xl"/>
+                            <button className="mx-4 font-medium">Home</button>
                         </Link>
                         <hr className="my-6 border-gray-200 dark:border-gray-600" />
                         <Link className="flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform rounded-md " >

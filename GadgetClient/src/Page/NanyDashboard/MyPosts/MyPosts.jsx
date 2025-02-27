@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import useAuth from "../../../Hooks/useAuth/useAuth";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { GrLike } from "react-icons/gr";
+import { GrDislike } from "react-icons/gr";
+import { FaCommentDots } from "react-icons/fa";
 
 export default function MyPosts() {
     const { user } = useAuth();
@@ -32,11 +35,17 @@ export default function MyPosts() {
                                 <div className="flex items-center">
                                     <div className="flex items-center">
                                         <img className="object-cover h-10 rounded-full" src={user?.photoURL} alt="Avatar" />
-                                        <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{user?.displayName}</a>
+                                        <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{user?.email}</a>
                                     </div>
                                     <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">21 SEP 2015</span>
                                 </div>
                                 <Link to={`/NannyDashboard/PostDetails/${post._id}`} className="btn btn-active btn-neutral">Show details</Link>
+                            </div>
+                            <hr className="my-5" />
+                            <div className="flex gap-10 text-white">
+                                <button title="Like" className="flex m-5"><GrLike className="mt-1 mr-2" /> <span className="">Like</span></button>
+                                <button title="Dislike" className="flex m-5"><GrDislike className="mt-1 mr-2" /><span>Dislike</span></button>
+                                <button title="Comment" className="flex m-5"><FaCommentDots className="mt-1 mr-2" /><span>Comment</span></button>
                             </div>
                         </div>
                     </div>

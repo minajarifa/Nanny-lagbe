@@ -12,14 +12,11 @@ const Login = () => {
     const { signIn } = useAuth();
     // const navigate = useNavigate();
     // const location = useLocation();
-
-
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm()
-
     const onSubmit = (data) => {
         const { email, password } = data;
         console.log(data)

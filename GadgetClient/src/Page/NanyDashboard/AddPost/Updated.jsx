@@ -29,13 +29,13 @@ export default function Updated() {
         const phoneNoumber = form.phoneNoumber.value;
         const languages = form.languages.value;
         const duty = form.duty.value;
-        const postInfo = { education, age, location, experience, skills, phoneNoumber, languages, duty ,name,email,photoURL};
+        const postInfo = { education, age, location, experience, skills, phoneNoumber, languages, duty, name, email, photoURL };
         console.log(postInfo)
         try {
-            const data = await axios.put(`${import.meta.env.VITE_API_URL}/nannyCollection/${post._id}`,postInfo)
-            if(data.data.acknowledged===true){
-                 Swal.fire("Posted successfully");
-                 getData()
+            const data = await axios.put(`${import.meta.env.VITE_API_URL}/nannyCollection/${post._id}`, postInfo)
+            if (data.data.acknowledged === true) {
+                Swal.fire("Posted successfully");
+                getData()
             }
         } catch (error) {
             console.log(error)
@@ -52,7 +52,7 @@ export default function Updated() {
                                 <label className="label">
                                     <span className="label-text">Education</span>
                                 </label>
-                                <input type="text" name="education" placeholder="education" className="input input-bordered" defaultValue={post.education} required/>
+                                <input type="text" name="education" placeholder="education" className="input input-bordered" defaultValue={post.education} required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
@@ -64,7 +64,7 @@ export default function Updated() {
                                 <label className="label">
                                     <span className="label-text">location</span>
                                 </label>
-                                <input type="text" name="location" defaultValue={post.location} placeholder="location" className="input input-bordered" required/>
+                                <input type="text" name="location" defaultValue={post.location} placeholder="location" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
@@ -100,12 +100,12 @@ export default function Updated() {
                                 <label className="label">
                                     <span className="label-text">contact</span>
                                 </label>
-                                <input name="phoneNoumber" type="number" defaultValue={post.phoneNoumber} placeholder="Phone Number" className="input input-bordered" required/>                            </div>
+                                <input name="phoneNoumber" type="number" defaultValue={post.phoneNoumber} placeholder="Phone Number" className="input input-bordered" required />                            </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">languages</span>
                                 </label>
-                                <input type="text" name="languages" defaultValue={post.languages} placeholder="languages" className="input input-bordered" required/>                            </div>
+                                <input type="text" name="languages" defaultValue={post.languages} placeholder="languages" className="input input-bordered" required />                            </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">duty</span>

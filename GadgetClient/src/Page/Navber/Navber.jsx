@@ -58,8 +58,8 @@ const Navber = () => {
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img
-                                    alt=""
-                                    src={user?.photoURL} />
+                                    alt="profile"
+                                    src={user?.photoURL||"https://www.gettyimages.com/photos/profile"} />
                             </div>
                         </div>
                         <ul
