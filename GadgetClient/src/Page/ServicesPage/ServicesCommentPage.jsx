@@ -22,7 +22,7 @@ export default function ServicesCommentPage() {
         console.log(event.target.comment.value);
     }
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center text-white">
             <div className="max-w-2xl overflow-hidden rounded-lg shadow-md dark:bg-gray-800 ">
                 {/* <img className="object-cover w-full h-64" src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="Article" /> */}
                 <div className="p-6">
@@ -47,19 +47,19 @@ export default function ServicesCommentPage() {
                         <button title="Dislike" className="flex m-5"><GrDislike className="mt-1 mr-2" /><span>Dislike</span></button>
                         <Link to={`/ServicesCommentPage/:id`} title="Comment" className="flex m-5"><FaCommentDots className="mt-1 mr-2" /><span>Comment</span></Link>
                     </div>
-                    <hr/>
+                    <hr className="my-3"/>
                     {/*  */}
                     <div className="">
-                        <form onSubmit={handleCommment} className=" card-body">
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Password</span>
+                        <form onSubmit={handleCommment} className="border card-body">
+                            <div className="">
+                                <label className="text-white label">
+                                    <span className="w-full text-center text-white label-text">Password</span>
                                 </label>
-                                <input type="text" name="comment" placeholder="Comment here" className="input input-bordered" />
+                                <input type="text" name="comment" placeholder="Comment here" className="w-full text-black input input-bordered" />
                             </div>
-                            
-                                <button className="btn btn-primary">Login</button>
+                            <button className="btn btn-outline btn-accent">Login</button>
                         </form>
+                        wright comment were
                     </div>
                     {/*  */}
                 </div>
