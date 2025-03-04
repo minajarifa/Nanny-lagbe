@@ -84,14 +84,19 @@ async function run() {
 
     app.put("/nannyCollection/:id", async (req, res) => {
       const user = req.body;
+      console.log("user",user)
       const id = req.params.id;
+      console.log(id)
       const query = { _id: new ObjectId(id) };
+      console.log(query)
       const data = {
         $set: {
           ...user,
         },
       };
+      console.log(data)
       const result = await postCollection.updateOne(query, data);
+      console.log(result)
       res.send(result);
     });
 

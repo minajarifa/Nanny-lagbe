@@ -3,21 +3,29 @@ import { useEffect, useState } from "react"
 import { FaCommentDots } from "react-icons/fa";
 import { GrDislike, GrLike } from "react-icons/gr";
 import { Link } from "react-router-dom";
-import useAuth from "../../Hooks/useAuth/useAuth";
+import { CiBookmarkCheck } from "react-icons/ci";
 
 export default function ServicesPage() {
-    const { user } = useAuth();
+
     const [posts, setPosts] = useState();
+    const [users, setUsers] = useState();
     useEffect(() => {
         getData()
+        getUsers()
     }, [])
     const getData = async () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/nannyCollection`);
         setPosts(data)
-    } 
+    }
+    const getUsers = async () => {
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/usersData`);
+        setUsers(data)
+    }
+    console.log(users)
+    console.log(posts)
     return (
         <div>
-            <p className="text-5xl text-center">{posts?.length}</p>
+            <p className="mb-5 text-4xl text-center">Posts : {posts?.length}</p>
             <div className="grid gap-5 mx-10 ml-10 lg:grid-cols-2">
                 {
                     posts?.map(post => (
@@ -32,10 +40,10 @@ export default function ServicesPage() {
                                 <div className="flex justify-between mt-4 ">
                                     <div className="flex items-center">
                                         <div className="flex items-center">
-                                            <img className="object-cover h-10 rounded-full" src={user?.photoURL} alt="Avatar" />
-                                            <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{user?.email}</a>
+                                            <img className="object-cover h-10 rounded-full" src={post?.photoURL || "https://i.ibb.co.com/27rSBcKC/download.png"} alt="Avatar" />
+                                            <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{post?.email}</a>
                                         </div>
-                                        <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">21 SEP 2015</span>
+                                        <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">{users?.map(user => (<p key={user?.email}>{post.email === user.email && user?.role}</p>))}</span>
                                     </div>
                                     <Link to={`/NannyDashboard/PostDetails/${post._id}`} className="btn btn-active btn-neutral">Show details</Link>
                                 </div>
@@ -44,6 +52,7 @@ export default function ServicesPage() {
                                     <button title="Like" className="flex m-5"><GrLike className="mt-1 mr-2" /> <span className="">Like</span></button>
                                     <button title="Dislike" className="flex m-5"><GrDislike className="mt-1 mr-2" /><span>Dislike</span></button>
                                     <Link to={`/ServicesCommentPage/${post._id}`} title="Comment" className="flex m-5"><FaCommentDots className="mt-1 mr-2" /><span>Comment</span></Link>
+                                    <Link to={`/ServicesCommentPage/${post._id}`} title="Comment" className="flex m-5"><CiBookmarkCheck className="mt-1 mr-2" /><span>Book Now</span></Link>
                                 </div>
                             </div>
                         </div>

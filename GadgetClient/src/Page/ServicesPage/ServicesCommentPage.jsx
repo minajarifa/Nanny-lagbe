@@ -4,11 +4,12 @@ import { GrDislike, GrLike } from "react-icons/gr";
 import { FaCommentDots } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function ServicesCommentPage() {
     const { user } = useAuth()
     const { id } = useParams();
-
+    console.log(user)
     const [post, setPost] = useState()
     useEffect(() => {
         getData()
@@ -17,9 +18,24 @@ export default function ServicesCommentPage() {
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/nanny/${id}`);
         setPost(data);
     }
-    const handleCommment = (event) => {
+    const handleCommment = async (event) => {
         event.preventDefault();
-        console.log(event.target.comment.value);
+        const userNameComment = user?.displayName;
+        const userEmailComment = user?.email;
+        const userPhotoURLComment = user?.photoURL;
+        const UserComment = event.target.comment.value;
+        const commentInfo = { userNameComment, userEmailComment, userPhotoURLComment, UserComment }
+        console.log(commentInfo, id);
+        try {
+            const data = await axios.put(`${import.meta.env.VITE_API_URL}/nannyCollection/${id}`, commentInfo)
+            if (data.data.acknowledged === true) {
+                Swal.fire("Posted successfully");
+                getData()
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
     }
     return (
         <div className="flex justify-center text-white">
@@ -34,8 +50,8 @@ export default function ServicesCommentPage() {
                     <div className="flex justify-between mt-4 ">
                         <div className="flex items-center">
                             <div className="flex items-center">
-                                <img className="object-cover h-10 rounded-full" src={user?.photoURL} alt="Avatar" />
-                                <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{user?.email}</a>
+                                <img className="object-cover h-10 rounded-full" src={post?.photoURL} alt="Avatar" />
+                                <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{post?.email}</a>
                             </div>
                             <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">21 SEP 2015</span>
                         </div>
@@ -47,7 +63,7 @@ export default function ServicesCommentPage() {
                         <button title="Dislike" className="flex m-5"><GrDislike className="mt-1 mr-2" /><span>Dislike</span></button>
                         <Link to={`/ServicesCommentPage/:id`} title="Comment" className="flex m-5"><FaCommentDots className="mt-1 mr-2" /><span>Comment</span></Link>
                     </div>
-                    <hr className="my-3"/>
+                    <hr className="my-3" />
                     {/*  */}
                     <div className="">
                         <form onSubmit={handleCommment} className="border card-body">
@@ -55,7 +71,7 @@ export default function ServicesCommentPage() {
                                 <label className="text-white label">
                                     <span className="w-full text-center text-white label-text">Password</span>
                                 </label>
-                                <input type="text" name="comment" placeholder="Comment here" className="w-full text-black input input-bordered" />
+                                <input type="text" name="comment" placeholder="Comment here" className="w-full text-black input input-bordered" required />
                             </div>
                             <button className="btn btn-outline btn-accent">Login</button>
                         </form>
