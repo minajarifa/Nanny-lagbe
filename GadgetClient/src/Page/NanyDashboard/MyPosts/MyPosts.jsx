@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react"
-import useAuth from "../../../Hooks/useAuth/useAuth";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { GrLike } from "react-icons/gr";
 import { GrDislike } from "react-icons/gr";
 import { FaCommentDots } from "react-icons/fa";
+import usePostByEmail from "../../../Hooks/usePostByEmail/usePostByEmail";
 
 export default function MyPosts() {
-    const { user } = useAuth();
-
-    const [posts, setPosts] = useState();
-    useEffect(() => {
-        const getData = async () => {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/nannyCollection/${user?.email}`)
-            setPosts(data)
-        }
-        getData()
-    }, [user])
+    const posts = usePostByEmail();
     console.log(posts)
     return (
         <div className="grid gap-5 ml-10 lg:grid-cols-2">
@@ -34,10 +23,10 @@ export default function MyPosts() {
                             <div className="flex justify-between mt-4 ">
                                 <div className="flex items-center">
                                     <div className="flex items-center">
-                                        <img className="object-cover h-10 rounded-full" src={user?.photoURL} alt="Avatar" />
-                                        <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{user?.email}</a>
+                                        <img className="object-cover h-10 rounded-full" src={post?.photoURL} alt="Avatar" />
+                                        <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{post?.email}</a>
                                     </div>
-                                    <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">21 SEP 2015</span>
+                                    <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">{post?.role}</span>
                                 </div>
                                 <Link to={`/NannyDashboard/PostDetails/${post._id}`} className="btn btn-active btn-neutral">Show details</Link>
                             </div>

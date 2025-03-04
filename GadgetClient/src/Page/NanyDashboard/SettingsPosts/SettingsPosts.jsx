@@ -1,28 +1,19 @@
-import { useEffect, useState } from "react";
-import useAuth from "../../../Hooks/useAuth/useAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdSystemUpdateAlt } from "react-icons/md";
 import { MdSignpost } from "react-icons/md";
+import usePostByEmail from "../../../Hooks/usePostByEmail/usePostByEmail";
 
 export default function SettingsPosts() {
+    const posts = usePostByEmail();
+    console.log(posts)
     const handleDelete = async (id) => {
         const deleted = await axios.delete(`${import.meta.env.VITE_API_URL}/postDelete/${id}`)
         if (deleted.data.acknowledged === true) {
             Swal.fire("Deleted successfully");
-            getData();
         }
-    }
-    const { user } = useAuth();
-    const [posts, setPosts] = useState();
-    useEffect(() => {
-        getData();
-    }, [])
-    const getData = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/nannyCollection/${user?.email}`)
-        setPosts(data)
     }
     return (
         <div>
@@ -47,7 +38,7 @@ export default function SettingsPosts() {
                                             <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Posts`</span>
-                                                    <MdSignpost/>
+                                                    <MdSignpost />
                                                 </button>
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -73,10 +64,10 @@ export default function SettingsPosts() {
                                                     <div className="inline-flex items-center gap-x-3">
 
                                                         <div className="flex items-center gap-x-2">
-                                                            <img className="object-cover w-10 h-10 rounded-full" src={user?.photoURL} alt="" />
+                                                            <img className="object-cover w-10 h-10 rounded-full" src={post?.photoURL} alt="" />
                                                             <div>
-                                                                <h2 className="font-medium text-gray-800 dark:text-white ">{user?.displayName}</h2>
-                                                                <p className="text-sm font-normal text-gray-600 dark:text-gray-400">@authurmelo</p>
+                                                                <h2 className="font-medium text-gray-800 dark:text-white ">{post?.displayName}</h2>
+                                                                <p className="text-sm font-normal text-gray-600 dark:text-gray-400">{post.name}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -88,8 +79,8 @@ export default function SettingsPosts() {
                                                         <h2 className="text-sm font-normal text-emerald-500">Active</h2>
                                                     </div>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Design Director</td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{user?.email}</td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{post?.role}</td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{post?.email}</td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center gap-x-2">
                                                         <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">Design</p>

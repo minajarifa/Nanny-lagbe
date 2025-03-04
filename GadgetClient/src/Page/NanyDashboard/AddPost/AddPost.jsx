@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form"
 import useAuth from "../../../Hooks/useAuth/useAuth";
 import axios from 'axios';
 import Swal from "sweetalert2";
+import useUsersData from "../../../Hooks/useUsersData/useUsersData";
 export default function AddPost() {
     const { user } = useAuth();
+    const userData = useUsersData();
     const { register, formState: { errors }, } = useForm()
 
     const handleAddPost = async (event) => {
@@ -11,6 +13,7 @@ export default function AddPost() {
         const form = event.target;
         const name = user.displayName
         const email = user.email
+        const role = userData.role
         const photoURL = user.photoURL
         const education = form.education.value;
         const age = form.age.value;
@@ -20,7 +23,20 @@ export default function AddPost() {
         const phoneNoumber = form.phoneNoumber.value;
         const languages = form.languages.value;
         const duty = form.duty.value;
-        const postInfo = { education, age, location, experience, skills, phoneNoumber, languages, duty, name, email, photoURL };
+        const postInfo = {
+            name,
+            email,
+            role,
+            photoURL,
+            phoneNoumber,
+            education,
+            age,
+            location,
+            experience,
+            skills,
+            languages,
+            duty,
+        };
         console.log(postInfo)
         try {
             const getData = await axios.post(`${import.meta.env.VITE_API_URL}/nannyCollection`, postInfo)
@@ -32,6 +48,7 @@ export default function AddPost() {
             console.log(error)
         }
     }
+    console.log(userData)
     return (
         <div>
             <h1 className="ml-20 text-3xl text-center">Add a post</h1>
@@ -39,20 +56,6 @@ export default function AddPost() {
                 <div className="w-full bg-purple-200 shadow-2xl card shrink-0">
                     <form onSubmit={handleAddPost} className="w-full card-body">
                         <div className="grid gap-5 lg:grid-cols-2">
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Name</span>
-                                </label>
-                                <input defaultValue={user?.displayName} type="text" {...register("name", { required: true })} placeholder="Your Name" className="input input-bordered" />
-                                {errors.name && <span className="text-red-600">This field is required</span>}
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Email</span>
-                                </label>
-                                <input defaultValue={user.email} type="email" {...register("email", { required: true })} placeholder="your email" className="input input-bordered" />
-                                {errors.email && <span className="text-red-600">This field is required</span>}
-                            </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Education</span>
@@ -125,7 +128,16 @@ export default function AddPost() {
                                 <label className="label">
                                     <span className="label-text">duty</span>
                                 </label>
-                                <input type="text" {...register("duty")} placeholder="dyty time" className="input input-bordered" required />
+                                <select {...register("duty", { required: true })} type="text" placeholder="experience" className="input input-bordered">
+                                    <option value="">Hour</option>
+                                    <option value="1 years">2 hour</option>
+                                    <option value="2 years">4 hour</option>
+                                    <option value="3 years">6 hour</option>
+                                    <option value="4 years">8 hour</option>
+                                    <option value="5 years">10 hour</option>
+                                    <option value="6 years">12 hour</option>
+                                    <option value="6 Month">full time</option>
+                                </select>
                                 {errors.duty && <span className="text-red-600">This field is required</span>}
                             </div>
                         </div>

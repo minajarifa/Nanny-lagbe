@@ -1,28 +1,12 @@
-import axios from "axios";
-import { useEffect, useState } from "react"
 import { FaCommentDots } from "react-icons/fa";
 import { GrDislike, GrLike } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { CiBookmarkCheck } from "react-icons/ci";
+import usePostData from "../../Hooks/usePostData/usePostData";
 
 export default function ServicesPage() {
-
-    const [posts, setPosts] = useState();
-    const [users, setUsers] = useState();
-    useEffect(() => {
-        getData()
-        getUsers()
-    }, [])
-    const getData = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/nannyCollection`);
-        setPosts(data)
-    }
-    const getUsers = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/usersData`);
-        setUsers(data)
-    }
-    console.log(users)
-    console.log(posts)
+    const posts = usePostData();
+    console.log(posts);
     return (
         <div>
             <p className="mb-5 text-4xl text-center">Posts : {posts?.length}</p>
@@ -43,7 +27,7 @@ export default function ServicesPage() {
                                             <img className="object-cover h-10 rounded-full" src={post?.photoURL || "https://i.ibb.co.com/27rSBcKC/download.png"} alt="Avatar" />
                                             <a className="mx-2 font-semibold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">{post?.email}</a>
                                         </div>
-                                        <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">{users?.map(user => (<p key={user?.email}>{post.email === user.email && user?.role}</p>))}</span>
+                                        <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">{post?.role}</span>
                                     </div>
                                     <Link to={`/NannyDashboard/PostDetails/${post._id}`} className="btn btn-active btn-neutral">Show details</Link>
                                 </div>
