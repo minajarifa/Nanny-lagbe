@@ -33,7 +33,25 @@ async function run() {
   try {
     const usersCollection = client.db("conceptual").collection("usersData");
     const postCollection = client.db("conceptual").collection("post");
-    // const nannyCollection=client.db("conceptual").collection()
+    const bookCollection = client.db("conceptual").collection("booking");
+
+    // _____________________bookCollection_______________________
+    app.post("/booking", async (req, res) => {
+      console.log(req.body);
+      const result = await bookCollection.insertOne(req.body);
+      console.log(result);
+      res.send(result);
+    });
+    app.get("/booking", async (req, res) => {
+      const result = await bookCollection.find().toArray();
+      res.send(result);
+    });
+    app.get("/booking/:email", async (req, res) => {
+      const email = req.params.email;
+      console.log(email);
+      const result = await bookCollection.find({ email }).toArray();
+      res.send(result);
+    });
     // _____________________usersCollection______________________
     // add user data to post
     app.post("/userData", async (req, res) => {
@@ -84,25 +102,19 @@ async function run() {
 
     app.put("/nannyCollection/:id", async (req, res) => {
       const user = req.body;
-      console.log("user",user)
       const id = req.params.id;
-      console.log(id)
       const query = { _id: new ObjectId(id) };
-      console.log(query)
       const data = {
         $set: {
           ...user,
         },
       };
-      console.log(data)
       const result = await postCollection.updateOne(query, data);
-      console.log(result)
       res.send(result);
     });
 
     // _____________________________________________
-    
-  
+
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );

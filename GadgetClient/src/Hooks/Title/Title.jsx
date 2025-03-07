@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 
 
-const Title = () => {
+const Title = ({title}) => {
     return (
         <div>
-            
+            {title}
         </div>
     );
 };

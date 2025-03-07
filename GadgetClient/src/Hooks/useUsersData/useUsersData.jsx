@@ -4,14 +4,14 @@ import axios from "axios"
 
 
 export default function useUsersData() {
-    const [userData,setUserData]=useState()
-    const { user } = useAuth()
-    useEffect(() => {
-      getData()
-    }, [])
+  const { user } = useAuth()
+  const [userData, setUserData] = useState()
+  useEffect(() => {
     const getData = async () => {
       const { data } = await axios(`${import.meta.env.VITE_API_URL}/usersData/${user?.email}`);
-      setUserData(data); 
+      setUserData(data);
     }
-  return userData
+    getData()
+  }, [user?.email])
+  return userData;
 }

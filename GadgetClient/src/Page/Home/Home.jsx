@@ -3,7 +3,6 @@ import useAuth from "../../Hooks/useAuth/useAuth";
 
 const Home = () => {
 const {user}=useAuth();
-console.log(user)
     return (
         <div>
             {/* <Banner/> */}

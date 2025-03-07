@@ -6,8 +6,7 @@ export default function usePostByEmail() {
     const { user } = useAuth();
 
     const [posts, setPosts] = useState();
-    useEffect(() => {
-       
+    useEffect(() => {  
         getData()
     }, [user])
     const getData = async () => {

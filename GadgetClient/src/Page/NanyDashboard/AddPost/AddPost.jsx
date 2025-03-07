@@ -6,15 +6,15 @@ import useUsersData from "../../../Hooks/useUsersData/useUsersData";
 export default function AddPost() {
     const { user } = useAuth();
     const userData = useUsersData();
-    const { register, formState: { errors }, } = useForm()
-
+    const { register, formState: { errors }, } = useForm();
     const handleAddPost = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
         const form = event.target;
-        const name = user.displayName
-        const email = user.email
-        const role = userData.role
-        const photoURL = user.photoURL
+        const name = userData.displayName;
+        if (!userData.email === user.email) return console.log("hobe na apu")
+        const email = userData.email;
+        const role = userData.role;
+        const photoURL = userData.photo;
         const education = form.education.value;
         const age = form.age.value;
         const location = form.location.value;

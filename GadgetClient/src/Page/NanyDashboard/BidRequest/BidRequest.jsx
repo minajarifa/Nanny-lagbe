@@ -1,11 +1,17 @@
+import { Link } from "react-router-dom";
+import useBidRequest from "../../../Hooks/useBidRequest/useBidRequest"
+import { RiDeleteBinFill } from "react-icons/ri";
+import { MdSystemUpdateAlt } from "react-icons/md";
 
 export default function BidRequest() {
+    const booking = useBidRequest();
+    console.log(booking)
     return (
         <div>
             <section className="container px-4 mx-auto">
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800 dark:text-white">Team members</h2>
-                    <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{posts?.length} Posts </span>
+                    <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">Bid Requests : {booking?.length} </span>
                 </div>
                 <div className="flex flex-col mt-6">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -47,14 +53,14 @@ export default function BidRequest() {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                         {
-                                            posts?.map(post => (<tr key={post?._id}>
+                                            booking?.map(book => (<tr key={book?._id}>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
 
                                                         <div className="flex items-center gap-x-2">
-                                                            <img className="object-cover w-10 h-10 rounded-full" src={user?.photoURL} alt="" />
+                                                            <img className="object-cover w-10 h-10 rounded-full" src={book?.parentPhotoURL || "https://ibb.co.com/Psy8tL6n"} alt="" />
                                                             <div>
-                                                                <h2 className="font-medium text-gray-800 dark:text-white ">{user?.displayName}</h2>
+                                                                <h2 className="font-medium text-gray-800 dark:text-white ">{book?.parentName}</h2>
                                                                 <p className="text-sm font-normal text-gray-600 dark:text-gray-400">@authurmelo</p>
                                                             </div>
                                                         </div>
@@ -67,8 +73,8 @@ export default function BidRequest() {
                                                         <h2 className="text-sm font-normal text-emerald-500">Active</h2>
                                                     </div>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Design Director</td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{user?.email}</td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{book?.parentRole}</td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{book?.parentEmail}</td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center gap-x-2">
                                                         <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">Design</p>
@@ -78,10 +84,12 @@ export default function BidRequest() {
                                                 </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center gap-x-6">
-                                                        <button onClick={() => handleDelete(post?._id)} className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                                                        <button 
+                                                        // onClick={() => handleDelete(book?._id)} 
+                                                        className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                             <RiDeleteBinFill className="text-xl" />
                                                         </button>
-                                                        <Link to={`/NannyDashboard/Updated/${post?._id}`} className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                                        <Link to={`/NannyDashboard/Updated/${book?._id}`} className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                                                             <MdSystemUpdateAlt className="text-xl" />
                                                         </Link>
                                                     </div>

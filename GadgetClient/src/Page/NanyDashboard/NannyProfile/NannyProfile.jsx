@@ -1,7 +1,7 @@
 import useUsersData from "../../../Hooks/useUsersData/useUsersData";
 export default function NannyProfile() {
   
-  const userData = useUsersData()
+  const userData = useUsersData();
   return (
     <div className="ml-10">
       <div className="w-full max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">

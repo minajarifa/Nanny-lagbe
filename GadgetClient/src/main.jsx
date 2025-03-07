@@ -24,6 +24,7 @@ import PostDetails from './Page/NanyDashboard/MyPosts/PostDetails.jsx';
 import SettingsPosts from './Page/NanyDashboard/SettingsPosts/SettingsPosts.jsx';
 import Updated from './Page/NanyDashboard/AddPost/Updated.jsx';
 import ServicesCommentPage from './Page/ServicesPage/ServicesCommentPage.jsx';
+import BidRequest from './Page/NanyDashboard/BidRequest/BidRequest.jsx';
 
 const router = createBrowserRouter([
   {
@@ -57,15 +58,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/NannyDashboard/NannyProfile",
-        element: <PrivateRouter>
-          <NannyProfile />,
-        </PrivateRouter>
+        element: (
+          <PrivateRouter>
+            <NannyProfile />,
+          </PrivateRouter>
+        )
       },
       {
         path: "/NannyDashboard/MyPosts",
-        element: <PrivateRouter>
-          <MyPosts />,
-        </PrivateRouter>
+        element: (
+          <PrivateRouter>
+            <MyPosts />,
+          </PrivateRouter>
+        )
       },
       {
         path: "/NannyDashboard/AddPost",
@@ -96,6 +101,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <Updated />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/NannyDashboard/BidRequest",
+        element: (
+          <PrivateRouter>
+            <BidRequest />
           </PrivateRouter>
         ),
       },

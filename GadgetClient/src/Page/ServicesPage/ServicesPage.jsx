@@ -1,12 +1,39 @@
 import { FaCommentDots } from "react-icons/fa";
 import { GrDislike, GrLike } from "react-icons/gr";
 import { Link } from "react-router-dom";
-import { CiBookmarkCheck } from "react-icons/ci";
+import { FaRegBookmark } from "react-icons/fa6";
 import usePostData from "../../Hooks/usePostData/usePostData";
+import axios from "axios";
+import useAuth from "../../Hooks/useAuth/useAuth";
+import useUsersData from "../../Hooks/useUsersData/useUsersData";
 
 export default function ServicesPage() {
-    const posts = usePostData();
-    console.log(posts);
+    const { user } = useAuth()
+    const userData = useUsersData()
+    console.log(userData)
+    const posts = usePostData()
+    const handleBookButton = async (post) => {
+        const parentName = user.displayName;
+        const parentEmail = user.email;
+        const parentPhotoURL = user.photoURL;
+        const parentRole = userData.role;
+        const name = post.name;
+        const email = post.email;
+        if( email === user.email ) return console.log("sorry apu hobe na")   
+        const role = post.role;
+        const photoUR = post.photoUR;
+        const phoneNoumber = post.name;
+        const education = post.education;
+        const age = post.age;
+        const location = post.location;
+        const experience = post.experience;
+        const skills = post.skills;
+        const languages = post.languages;
+        const duty = post.duty;
+        const nannyInfo = { name, email, role, photoUR, phoneNoumber, education, age, location, experience, skills, languages, duty, parentName, parentEmail, parentPhotoURL, parentRole }
+        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/booking`, nannyInfo);
+        console.log(data);
+    }
     return (
         <div>
             <p className="mb-5 text-4xl text-center">Posts : {posts?.length}</p>
@@ -36,7 +63,7 @@ export default function ServicesPage() {
                                     <button title="Like" className="flex m-5"><GrLike className="mt-1 mr-2" /> <span className="">Like</span></button>
                                     <button title="Dislike" className="flex m-5"><GrDislike className="mt-1 mr-2" /><span>Dislike</span></button>
                                     <Link to={`/ServicesCommentPage/${post._id}`} title="Comment" className="flex m-5"><FaCommentDots className="mt-1 mr-2" /><span>Comment</span></Link>
-                                    <Link to={`/ServicesCommentPage/${post._id}`} title="Comment" className="flex m-5"><CiBookmarkCheck className="mt-1 mr-2" /><span>Book Now</span></Link>
+                                    <button onClick={() => handleBookButton(post)} title="Comment" className="flex m-5"><FaRegBookmark className="mt-1 mr-2" /><span>Book Now</span></button>
                                 </div>
                             </div>
                         </div>

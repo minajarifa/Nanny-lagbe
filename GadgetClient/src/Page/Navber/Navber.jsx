@@ -11,7 +11,7 @@ const Navber = () => {
     const Navigate =
         <>
             <Link className="m-2" to="/">Home</Link>
-            <Link className="m-2" to="/Practice">Practice</Link>
+            {/* <Link className="m-2" to="/Practice">Practice</Link> */}
             <Link className="m-2" to="/ServicesPage">Services Page</Link>
             <Link className="m-2" to="/AboutUs">About Us</Link>
             <p className="m-2">{user?.displayName}</p>

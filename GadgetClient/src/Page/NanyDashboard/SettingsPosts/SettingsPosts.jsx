@@ -21,7 +21,7 @@ export default function SettingsPosts() {
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800 dark:text-white">Team members</h2>
 
-                    <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{posts?.length} Posts </span>
+                    <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">My Posts : {posts?.length}</span>
                 </div>
                 <div className="flex flex-col mt-6">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -75,7 +75,6 @@ export default function SettingsPosts() {
                                                 <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
                                                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-
                                                         <h2 className="text-sm font-normal text-emerald-500">Active</h2>
                                                     </div>
                                                 </td>
