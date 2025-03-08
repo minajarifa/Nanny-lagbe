@@ -35,6 +35,8 @@ async function run() {
     const postCollection = client.db("conceptual").collection("post");
     const bookCollection = client.db("conceptual").collection("booking");
 
+    // _____________________JWT generate_______________________
+    
     // _____________________bookCollection_______________________
     app.post("/booking", async (req, res) => {
       console.log(req.body);

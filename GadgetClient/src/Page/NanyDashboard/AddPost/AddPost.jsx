@@ -10,8 +10,8 @@ export default function AddPost() {
     const handleAddPost = async (event) => {
         event.preventDefault();
         const form = event.target;
-        const name = userData.displayName;
-        if (!userData.email === user.email) return console.log("hobe na apu")
+        const name = userData.name;
+        if (!userData?.email === user?.email) return console.log("hobe na apu")
         const email = userData.email;
         const role = userData.role;
         const photoURL = userData.photo;

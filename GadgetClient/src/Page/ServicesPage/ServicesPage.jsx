@@ -17,9 +17,10 @@ export default function ServicesPage() {
         const parentEmail = user.email;
         const parentPhotoURL = user.photoURL;
         const parentRole = userData.role;
+        const status = "pending"
         const name = post.name;
         const email = post.email;
-        if( email === user.email ) return console.log("sorry apu hobe na")   
+        if (email === user.email) return console.log("sorry apu hobe na");
         const role = post.role;
         const photoUR = post.photoUR;
         const phoneNoumber = post.name;
@@ -30,7 +31,7 @@ export default function ServicesPage() {
         const skills = post.skills;
         const languages = post.languages;
         const duty = post.duty;
-        const nannyInfo = { name, email, role, photoUR, phoneNoumber, education, age, location, experience, skills, languages, duty, parentName, parentEmail, parentPhotoURL, parentRole }
+        const nannyInfo = { name, email, role, photoUR, phoneNoumber, education, age, location, experience, skills, languages, duty, parentName, parentEmail, parentPhotoURL, parentRole, status }
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/booking`, nannyInfo);
         console.log(data);
     }

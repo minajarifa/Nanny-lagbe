@@ -8,7 +8,7 @@ export default function usePostByEmail() {
     const [posts, setPosts] = useState();
     useEffect(() => {  
         getData()
-    }, [user])
+    }, [user?.email])
     const getData = async () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/nannyCollection/${user?.email}`)
         setPosts(data)
