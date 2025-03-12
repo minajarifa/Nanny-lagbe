@@ -1,14 +1,16 @@
-import { Link, useNavigate, 
+import {
+    Link, useNavigate,
     // useLocation, useNavigate
- } from "react-router-dom";
+} from "react-router-dom";
 import SocialLogin from "../../SimpleComponents/SociaLogin/SocialLogin";
 import useAuth from "../../Hooks/useAuth/useAuth";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import Swal from 'sweetalert2'
+import axios from 'axios';
 
 const Login = () => {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const { signIn } = useAuth();
     // const navigate = useNavigate();
     // const location = useLocation();
@@ -17,32 +19,56 @@ const Login = () => {
         handleSubmit,
         formState: { errors },
     } = useForm()
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         const { email, password } = data;
-        console.log(data)
-        signIn(email, password)
-            .then(result => {
-                console.log(result);
-                // start
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "User has been created",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                // end
-            })
-            navigate('/')
+        console.log(email, password)
+        try {
+            const result = await signIn(email, password);
+            console.log(result.user.email);
+            const data = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`,
+                { email: result?.user?.email },
+                { withCredentials: true });
+            console.log(data)
+            // start
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User has been created",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // end
+        } catch (error) {
+            console.log(error)
+        }
+        // signIn(email, password)
+        //     .then(result => {
+        //         console.log(result);
+        //         // start
+        //         Swal.fire({
+        //             position: "top-end",
+        //             icon: "success",
+        //             title: "User has been created",
+        //             showConfirmButton: false,
+        //             timer: 1500
+        //         });
+        //         // end
+        //     })
+        navigate('/')
     }
-    // const handleLoginSubmit = (event) => {
+    // const handleLoginSubmit = async (event) => {
     //     event.preventDefault();
     //     const form = event.target;
-    //     const pass = form.password.value;
-    //     const email = form.email.value;
-    //     const user = { pass, email };
-    //     console.log('user', user);
-    // }
+    //     const email = form.email.value; 
+    //     const password = form.password.value;
+    //     console.log("Attempting login with:", { email, password });
+    //     try {
+    //         const result = await signIn(email, password);
+    //         console.log("Login successful:", result);
+    //     } catch (error) {
+    //         console.error("Login failed:", error.code, error.message);
+    //     }
+    // };
 
     return (
         <div className="flex items-center justify-center">

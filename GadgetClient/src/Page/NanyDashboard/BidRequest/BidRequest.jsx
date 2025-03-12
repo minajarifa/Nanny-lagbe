@@ -5,6 +5,7 @@ import { MdSystemUpdateAlt } from "react-icons/md";
 
 export default function BidRequest() {
     const booking = useBidRequest();
+    console.log(booking)
     return (
         <div>
             <section className="container px-4 mx-auto">
@@ -83,9 +84,9 @@ export default function BidRequest() {
                                                 </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center gap-x-6">
-                                                        <button 
-                                                        // onClick={() => handleDelete(book?._id)} 
-                                                        className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                                                        <button
+                                                            // onClick={() => handleDelete(book?._id)} 
+                                                            className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                             <RiDeleteBinFill className="text-xl" />
                                                         </button>
                                                         <Link to={`/NannyDashboard/Updated/${book?._id}`} className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">

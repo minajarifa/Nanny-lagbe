@@ -31,7 +31,11 @@ const Register = () => {
             const user = await createUser(email, pass);
             await updateUserProfile(name, photo)
             const userData = await axios.post(`${import.meta.env.VITE_API_URL}/userData`, userInfo)
-            console.log("userData", userData.data)
+            const data = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`,
+                { email: user?.user?.email },
+                { withCredentials: true });
+            console.log(data)
+            
             // start
             Swal.fire({
                 position: "top-end",

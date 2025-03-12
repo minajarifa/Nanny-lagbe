@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-// const jwt = require("jsonwebtoken");
-// const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
@@ -18,9 +18,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser())
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.63qrdth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const uri = `mongodb://localhost:27017`;
-
+console.log(process.env.ACCESS_TOKEN_SECRET);
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -35,13 +36,35 @@ async function run() {
     const postCollection = client.db("conceptual").collection("post");
     const bookCollection = client.db("conceptual").collection("booking");
 
-    // _____________________JWT generate_______________________
-    
+    // _____________________JWT generate_________________________
+    app.post("/jwt", async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "1d",
+      });
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "product",
+          sameSite: process.env.NODE_ENV === "product" ? "none" : "strict",
+        })
+        .send({ success: true });
+    });
+    // _____________________clear token on logout________________
+    app.get("/logout", async (req, res) => {
+      res
+        .clearCookie("token", {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "product",
+          sameSite: process.env.NODE_ENV === "product" ? "none" : "strict",
+          maxAge: 0,
+        })
+        .send({ success: true });
+    });
+
     // _____________________bookCollection_______________________
     app.post("/booking", async (req, res) => {
-      console.log(req.body);
       const result = await bookCollection.insertOne(req.body);
-      console.log(result);
       res.send(result);
     });
     app.get("/booking", async (req, res) => {
@@ -50,7 +73,6 @@ async function run() {
     });
     app.get("/booking/:email", async (req, res) => {
       const email = req.params.email;
-      console.log(email);
       const result = await bookCollection.find({ email }).toArray();
       res.send(result);
     });

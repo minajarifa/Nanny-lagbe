@@ -11,7 +11,8 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import auth from '../firebase.config'
- 
+import axios from 'axios';
+
 
 export const AuthContext = createContext(null);
 const googleProvider = new GoogleAuthProvider();
@@ -31,16 +32,26 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password)
   }
 
-  const signInWithGoogle = () => {
-    setLoading(true)
+  const signInWithGoogle = async () => {
+    setLoading(true);
+    const data = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`,
+      { email: user?.email },
+      { withCredentials: true });
+    console.log(data)
     return signInWithPopup(auth, googleProvider);
   }
-  const signInWithGithub = () => {
+  const signInWithGithub =async () => {
     setLoading(true)
+    const data = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`,
+      { email:user?.email },
+      { withCredentials: true });
+  console.log(data)
     return signInWithPopup(auth, githubProvider);
   }
   const logOut = async () => {
     setLoading(true)
+    const data = await axios(`${import.meta.env.VITE_API_URL}/logout`, { withCredentials: true });
+    console.log(data);
     return signOut(auth)
   }
   const updateUserProfile = (name, photo) => {

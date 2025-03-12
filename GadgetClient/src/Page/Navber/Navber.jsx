@@ -59,7 +59,7 @@ const Navber = () => {
                             <div className="w-10 rounded-full">
                                 <img
                                     alt="profile"
-                                    src={user?.photoURL||"https://www.gettyimages.com/photos/profile"} />
+                                    src={user?.photoURL||"https://i.ibb.co.com/27rSBcKC/download.png"} />
                             </div>
                         </div>
                         <ul
