@@ -18,7 +18,26 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cookieParser())
+//this is verify token
+app.use(cookieParser());
+// middle ware
+const verifyToken = async (req, res, next) => {
+  const token = req.cookies.token;
+  console.log("token", token);
+  if (!token) return res.status(401).send({ message: "unauthorized access" });
+  if (token) {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decoded) => {
+      if (error) {
+        console.log(error);
+        return res.status(401).send({ message: "unauthorized access" });
+        // return
+      }
+      req.user = decoded;
+      console.log("decoded", decoded);
+      next();
+    });
+  }
+};
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.63qrdth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const uri = `mongodb://localhost:27017`;
 console.log(process.env.ACCESS_TOKEN_SECRET);
@@ -38,8 +57,8 @@ async function run() {
 
     // _____________________JWT generate_________________________
     app.post("/jwt", async (req, res) => {
-      const user = req.body;
-      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      const email = req.body;
+      const token = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "1d",
       });
       res
@@ -106,8 +125,10 @@ async function run() {
       const result = await postCollection.find().toArray();
       res.send(result);
     });
-    app.get("/nannyCollection/:email", async (req, res) => {
+    app.get("/nannyCollection/:email", verifyToken, async (req, res) => {
+      const tokenEmail= req.user.email;
       const email = req.params.email;
+      if(email!==tokenEmail) return res.status(401).send({ message: "unauthorized access" });
       const result = await postCollection.find({ email }).toArray();
       res.send(result);
     });
