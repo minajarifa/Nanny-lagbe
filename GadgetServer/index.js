@@ -90,7 +90,7 @@ async function run() {
       const result = await bookCollection.find().toArray();
       res.send(result);
     });
-    app.get("/booking/:email", async (req, res) => {
+    app.get("/booking/:email",verifyToken, async (req, res) => {
       const email = req.params.email;
       const result = await bookCollection.find({ email }).toArray();
       res.send(result);
@@ -103,12 +103,12 @@ async function run() {
       res.send(result);
     });
     // get all userData
-    app.get("/usersData", async (req, res) => {
+    app.get("/usersData",verifyToken, async (req, res) => {
       const result = await usersCollection.find().toArray();
       res.send(result);
     });
     // get a userData by email
-    app.get("/usersData/:email", async (req, res) => {
+    app.get("/usersData/:email",verifyToken, async (req, res) => {
       const email = req.params.email;
       const result = await usersCollection.findOne({ email });
       res.send(result);
@@ -132,20 +132,20 @@ async function run() {
       const result = await postCollection.find({ email }).toArray();
       res.send(result);
     });
-    app.get("/nanny/:id", async (req, res) => {
+    app.get("/nanny/:id", verifyToken,async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await postCollection.findOne(query);
       res.send(result);
     });
-    app.delete("/postDelete/:id", async (req, res) => {
+    app.delete("/postDelete/:id",verifyToken, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await postCollection.deleteOne(query);
       res.send(result);
     });
 
-    app.put("/nannyCollection/:id", async (req, res) => {
+    app.put("/nannyCollection/:id",verifyToken, async (req, res) => {
       const user = req.body;
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };

@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react"
 import useAuth from "../useAuth/useAuth"
-import axios from "axios"
+import useAxiosSecure from "../useAxiosSecure";
 
 
 export default function useUsersData() {
-  const { user } = useAuth()
-  const [userData, setUserData] = useState()
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [userData, setUserData] = useState();
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios(`${import.meta.env.VITE_API_URL}/usersData/${user?.email}`);
+      const { data } = await axiosSecure(`/usersData/${user?.email}`);
       setUserData(data);
     }
-    getData()
-  }, [user?.email])
+    getData();
+  }, [user]);
   return userData;
 }

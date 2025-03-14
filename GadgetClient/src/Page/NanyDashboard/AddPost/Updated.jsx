@@ -1,22 +1,23 @@
 import useAuth from "../../../Hooks/useAuth/useAuth";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 export default function Updated() {
-    const [post, setPost] = useState([])
+    const [post, setPost] = useState([]);
+    const axiosSecure = useAxiosSecure();
     const { id } = useParams();
     const { user } = useAuth();
     useEffect(() => {
         getData()
     }, [id])
     const getData = async () => {
-        const data = await axios(`${import.meta.env.VITE_API_URL}/nanny/${id}`)
+        const data = await axiosSecure(`/nanny/${id}`);
         setPost(data.data)
     }
     const handleUpdatedSubmit = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
         const form = event.target;
         const name = user.displayName
         const email = user.email
@@ -30,9 +31,9 @@ export default function Updated() {
         const languages = form.languages.value;
         const duty = form.duty.value;
         const postInfo = { education, age, location, experience, skills, phoneNoumber, languages, duty, name, email, photoURL };
-        console.log(postInfo)
+        console.log(postInfo);
         try {
-            const data = await axios.put(`${import.meta.env.VITE_API_URL}/nannyCollection/${post._id}`, postInfo)
+            const data = await axiosSecure.put(`/nannyCollection/${post._id}`, postInfo)
             if (data.data.acknowledged === true) {
                 Swal.fire("Posted successfully");
                 getData()

@@ -1,16 +1,18 @@
-import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdSystemUpdateAlt } from "react-icons/md";
 import { MdSignpost } from "react-icons/md";
 import usePostByEmail from "../../../Hooks/usePostByEmail/usePostByEmail";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+
 
 export default function SettingsPosts() {
     const posts = usePostByEmail();
-    console.log(posts)
+    const axiosSecure = useAxiosSecure();
+    console.log(posts);
     const handleDelete = async (id) => {
-        const deleted = await axios.delete(`${import.meta.env.VITE_API_URL}/postDelete/${id}`)
+        const deleted = await axiosSecure.delete(`/postDelete/${id}`);
         if (deleted.data.acknowledged === true) {
             Swal.fire("Deleted successfully");
         }
@@ -20,7 +22,6 @@ export default function SettingsPosts() {
             <section className="container px-4 mx-auto">
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800 dark:text-white">Team members</h2>
-
                     <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">My Posts : {posts?.length}</span>
                 </div>
                 <div className="flex flex-col mt-6">

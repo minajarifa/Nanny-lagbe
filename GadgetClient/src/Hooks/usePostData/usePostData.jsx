@@ -1,15 +1,16 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import useAxiosBase from "../useAxiosBase/useAxiosBase";
 
 
 export default function usePostData() {
+    const axiosBase = useAxiosBase();
     const [posts, setPosts] = useState();
     useEffect(() => {
-        getData()
+        getData();
       
     }, [])
     const getData = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/nannyCollection`);
+        const { data } = await axiosBase(`/nannyCollection`);
         setPosts(data)
     }
   return posts

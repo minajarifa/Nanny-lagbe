@@ -5,7 +5,7 @@ import { MdSystemUpdateAlt } from "react-icons/md";
 
 export default function BidRequest() {
     const booking = useBidRequest();
-    console.log(booking)
+    console.log(booking);
     return (
         <div>
             <section className="container px-4 mx-auto">

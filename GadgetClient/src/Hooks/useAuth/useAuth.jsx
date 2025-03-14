@@ -3,6 +3,6 @@ import { AuthContext } from "../../AuthProvider/AuthProvider"
 
 
 export default function useAuth() {
-    const all= useContext(AuthContext)
-  return all
+  const all = useContext(AuthContext);
+  return all;
 }

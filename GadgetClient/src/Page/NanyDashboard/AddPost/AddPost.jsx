@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form"
 import useAuth from "../../../Hooks/useAuth/useAuth";
-import axios from 'axios';
 import Swal from "sweetalert2";
 import useUsersData from "../../../Hooks/useUsersData/useUsersData";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 export default function AddPost() {
+    const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const userData = useUsersData();
     const { register, formState: { errors }, } = useForm();
@@ -11,7 +12,7 @@ export default function AddPost() {
         event.preventDefault();
         const form = event.target;
         const name = userData.name;
-        if (!userData?.email === user?.email) return console.log("hobe na apu")
+        if (!userData?.email === user?.email) return console.log("hobe na apu");
         const email = userData.email;
         const role = userData.role;
         const photoURL = userData.photo;
@@ -39,7 +40,7 @@ export default function AddPost() {
         };
         console.log(postInfo)
         try {
-            const getData = await axios.post(`${import.meta.env.VITE_API_URL}/nannyCollection`, postInfo)
+            const getData = await axiosSecure.post(`/nannyCollection`, postInfo)
             console.log(getData)
             if (getData.data.acknowledged === true) {
                 Swal.fire("Posted successfully");
