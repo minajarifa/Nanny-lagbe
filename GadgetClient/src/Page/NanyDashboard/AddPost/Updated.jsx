@@ -3,44 +3,57 @@ import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useMutation } from "@tanstack/react-query";
+// import { useMutation } from "@tanstack/react-query";
 
 export default function Updated() {
     const [post, setPost] = useState([]);
     const axiosSecure = useAxiosSecure();
     const { id } = useParams();
     const { user } = useAuth();
+  const {mutateAsync}=  useMutation({
+        mutationFn:async({id,postInfo})=>{
+            const data = await axiosSecure.put(`/nannyCollection/${id}`, postInfo);
+            console.log(data);
+        },
+        onSuccess:()=>{
+            console.log('Wow ,data updated');
+                Swal.fire("Posted successfully");
+        }
+    })
     useEffect(() => {
-        getData()
+        getData();
     }, [id])
     const getData = async () => {
         const data = await axiosSecure(`/nanny/${id}`);
         setPost(data.data)
     }
+   
     const handleUpdatedSubmit = async (event) => {
         event.preventDefault();
-        const form = event.target;
-        const name = user.displayName
-        const email = user.email
-        const photoURL = user.photoURL
-        const education = form.education.value;
-        const age = form.age.value;
-        const location = form.location.value;
-        const experience = form.experience.value;
-        const skills = form.skills.value;
-        const phoneNoumber = form.phoneNoumber.value;
-        const languages = form.languages.value;
-        const duty = form.duty.value;
+        const form = event?.target;
+        const name = user?.displayName;
+        const email = user?.email;
+        const photoURL = user?.photoURL;
+        const education = form?.education?.value;
+        const age = form?.age?.value;
+        const location = form?.location?.value;
+        const experience = form?.experience?.value;
+        const skills = form?.skills?.value;
+        const phoneNoumber = form?.phoneNoumber?.value;
+        const languages = form?.languages?.value;
+        const duty = form?.duty?.value;
         const postInfo = { education, age, location, experience, skills, phoneNoumber, languages, duty, name, email, photoURL };
         console.log(postInfo);
-        try {
-            const data = await axiosSecure.put(`/nannyCollection/${post._id}`, postInfo)
-            if (data.data.acknowledged === true) {
-                Swal.fire("Posted successfully");
-                getData()
-            }
-        } catch (error) {
-            console.log(error)
-        }
+        // try {
+        //     const data = await axiosSecure.put(`/nannyCollection/${post._id}`, postInfo)
+        //     if (data.data.acknowledged === true) {
+        //         Swal.fire("Posted successfully");
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        // }
+        await  mutateAsync({id:post._id,postInfo})
     }
     return (
         <div>

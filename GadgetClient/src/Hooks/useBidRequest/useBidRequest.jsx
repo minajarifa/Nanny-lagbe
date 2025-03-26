@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function useBidRequest() {
   const { user } = useAuth();
-  const { data:booking=[],isLoading, refetch, isError, error } = useQuery({
+  const { data:booking=[], isError, error } = useQuery({
     queryFn: () => getData(),
     queryKey: ["booking"]
   })

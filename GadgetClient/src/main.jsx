@@ -29,6 +29,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import ParentsBids from './Page/ParentsDashboard/ParentsBids/ParentsBids.jsx';
 
 
 const router = createBrowserRouter([
@@ -39,33 +40,33 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Home/>,
       },
       {
         path: "/ServicesPage",
-        element: <ServicesPage />
+        element: <ServicesPage/>
       },
       {
         path: "/ServicesCommentPage/:id",
-        element: <ServicesCommentPage />
+        element: <ServicesCommentPage/>
       },
       {
         path: "/AboutUs",
-        element: <AboutUs />
+        element: <AboutUs/>
       }
 
     ],
   },
   {
     path: "/NannyDashboard",
-    element: <NannyDashboard />,
-    errorElement: <ErrorPage />,
+    element: <NannyDashboard/>,
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: "/NannyDashboard/NannyProfile",
         element: (
           <PrivateRouter>
-            <NannyProfile />,
+            <NannyProfile/>,
           </PrivateRouter>
         )
       },
@@ -73,7 +74,7 @@ const router = createBrowserRouter([
         path: "/NannyDashboard/MyPosts",
         element: (
           <PrivateRouter>
-            <MyPosts />,
+            <MyPosts/>,
           </PrivateRouter>
         )
       },
@@ -81,7 +82,7 @@ const router = createBrowserRouter([
         path: "/NannyDashboard/AddPost",
         element: (
           <PrivateRouter>
-            <AddPost />
+            <AddPost/>
           </PrivateRouter>
         ),
       },
@@ -89,7 +90,7 @@ const router = createBrowserRouter([
         path: "/NannyDashboard/PostDetails/:id",
         element: (
           <PrivateRouter>
-            <PostDetails />
+            <PostDetails/>
           </PrivateRouter>
         ),
       },
@@ -97,7 +98,7 @@ const router = createBrowserRouter([
         path: "/NannyDashboard/SettingsPosts",
         element: (
           <PrivateRouter>
-            <SettingsPosts />
+            <SettingsPosts/>
           </PrivateRouter>
         ),
       },
@@ -105,7 +106,7 @@ const router = createBrowserRouter([
         path: "/NannyDashboard/Updated/:id",
         element: (
           <PrivateRouter>
-            <Updated />
+            <Updated/>
           </PrivateRouter>
         ),
       },
@@ -117,8 +118,14 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
-
-
+      {
+        path: "/NannyDashboard/ParentsBids",
+        element: (
+          <PrivateRouter>
+            <ParentsBids />
+          </PrivateRouter>
+        ),
+      },
     ],
   },
 

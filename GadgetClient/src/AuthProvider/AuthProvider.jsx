@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
     setLoading(true)
     const data = await axios(`${import.meta.env.VITE_API_URL}/logout`, { withCredentials: true });
     console.log(data);
-    return signOut(auth)
+    return signOut(auth);
   }
   const updateUserProfile = (name, photo) => {
     return updateProfile(auth.currentUser, {
@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser)
       console.log('CurrentUser-->', currentUser);
-      setLoading(false)
+      setLoading(false);
     })
     return () => {
       return unsubscribe()

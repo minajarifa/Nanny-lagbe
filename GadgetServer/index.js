@@ -23,7 +23,7 @@ app.use(cookieParser());
 // middle ware
 const verifyToken = async (req, res, next) => {
   const token = req.cookies.token;
-  console.log("token", token);
+  // console.log("token", token);
   if (!token) return res.status(401).send({ message: "unauthorized access" });
   if (token) {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decoded) => {
@@ -33,14 +33,14 @@ const verifyToken = async (req, res, next) => {
         // return
       }
       req.user = decoded;
-      console.log("decoded", decoded);
+      // console.log("decoded", decoded);
       next();
     });
   }
 };
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.63qrdth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const uri = `mongodb://localhost:27017`;
-console.log(process.env.ACCESS_TOKEN_SECRET);
+// console.log(process.env.ACCESS_TOKEN_SECRET);
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -54,7 +54,6 @@ async function run() {
     const usersCollection = client.db("conceptual").collection("usersData");
     const postCollection = client.db("conceptual").collection("post");
     const bookCollection = client.db("conceptual").collection("booking");
-
     // _____________________JWT generate_________________________
     app.post("/jwt", async (req, res) => {
       const email = req.body;
@@ -80,7 +79,6 @@ async function run() {
         })
         .send({ success: true });
     });
-
     // _____________________bookCollection_______________________
     app.post("/booking", async (req, res) => {
       const result = await bookCollection.insertOne(req.body);
@@ -90,9 +88,10 @@ async function run() {
       const result = await bookCollection.find().toArray();
       res.send(result);
     });
-    app.get("/booking/:email",verifyToken, async (req, res) => {
-      const email = req.params.email;
-      const result = await bookCollection.find({ email }).toArray();
+    app.get("/booking/:email", verifyToken, async (req, res) => {
+      const parentEmail = req.params.email;
+      console.log(parentEmail)
+      const result = await bookCollection.find({ parentEmail }).toArray();
       res.send(result);
     });
     // _____________________usersCollection______________________
@@ -103,12 +102,12 @@ async function run() {
       res.send(result);
     });
     // get all userData
-    app.get("/usersData",verifyToken, async (req, res) => {
+    app.get("/usersData", verifyToken, async (req, res) => {
       const result = await usersCollection.find().toArray();
       res.send(result);
     });
     // get a userData by email
-    app.get("/usersData/:email",verifyToken, async (req, res) => {
+    app.get("/usersData/:email", verifyToken, async (req, res) => {
       const email = req.params.email;
       const result = await usersCollection.findOne({ email });
       res.send(result);
@@ -121,31 +120,49 @@ async function run() {
       const result = await postCollection.insertOne(user);
       res.send(result);
     });
+    // for pagination
+    app.get("/post-count", async (req, res) => {
+      const filter = req.query.filter;
+      console.log(filter);
+      const count = await postCollection.countDocuments();
+      res.send({ count });
+    });
     app.get("/nannyCollection", async (req, res) => {
-      const result = await postCollection.find().toArray();
+      const page = parseInt(req.query.page);
+      const size = parseInt(req.query.size) - 1;
+      const filter = req.query.filter;
+      let query = {};
+      if (filter) query = { skills: filter };
+      const result = await postCollection
+        .find(query)
+        .skip(page * size)
+        .limit(size)
+        .toArray();
       res.send(result);
     });
     app.get("/nannyCollection/:email", verifyToken, async (req, res) => {
-      const tokenEmail= req.user.email;
+      const tokenEmail = req.user.email;
       const email = req.params.email;
-      if(email!==tokenEmail) return res.status(401).send({ message: "unauthorized access" });
+      if (email !== tokenEmail) {
+        return res.status(401).send({ message: "unauthorized access" });
+      }
       const result = await postCollection.find({ email }).toArray();
       res.send(result);
     });
-    app.get("/nanny/:id", verifyToken,async (req, res) => {
+    app.get("/nanny/:id", verifyToken, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await postCollection.findOne(query);
       res.send(result);
     });
-    app.delete("/postDelete/:id",verifyToken, async (req, res) => {
+    app.delete("/postDelete/:id", verifyToken, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await postCollection.deleteOne(query);
       res.send(result);
     });
 
-    app.put("/nannyCollection/:id",verifyToken, async (req, res) => {
+    app.put("/nannyCollection/:id", verifyToken, async (req, res) => {
       const user = req.body;
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };

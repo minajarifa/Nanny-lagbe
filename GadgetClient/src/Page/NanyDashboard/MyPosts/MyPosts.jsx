@@ -5,8 +5,8 @@ import { FaCommentDots } from "react-icons/fa";
 import usePostByEmail from "../../../Hooks/usePostByEmail/usePostByEmail";
 
 export default function MyPosts() {
-    const posts = usePostByEmail();
-    console.log(posts);
+    const posts = usePostByEmail()
+    console.log("posts",posts);
     return (
         <div className="grid gap-5 ml-10 lg:grid-cols-2">
             {posts?.length < 1 && <p className="text-xl text-center">Loading...</p>}

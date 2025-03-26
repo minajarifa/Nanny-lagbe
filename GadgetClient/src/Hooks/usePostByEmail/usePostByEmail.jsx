@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
 import useAuth from "../useAuth/useAuth";
 import useAxiosSecure from "../useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 export default function usePostByEmail() {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
-    const [posts, setPosts] = useState();
-    useEffect(() => {
-        getData();
-    }, [user]);
+    const { data: posts = [], isError, error } = useQuery({
+        queryFn: () => getData(),
+        queryKey: ['nannyCollection',user?.email ],
+    })
+    if (error || isError) {
+        console.log(isError);
+        console.log("error",error);
+    }
     const getData = async () => {
         const { data } = await axiosSecure(`/nannyCollection/${user?.email}`);
-        setPosts(data);
+        return data;
     }
     return posts;
 }

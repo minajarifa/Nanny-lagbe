@@ -48,6 +48,17 @@ export default function Sideber() {
                                 </>
                             )
                         }
+                        {
+                            userData?.role === "Parents" &&
+                            (
+                                <>
+                                    <Link to="/NannyDashboard/ParentsBids" className="flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform rounded-md ">
+                                        <MdOutlineSettings className="text-xl" />
+                                        <span className="mx-4 font-medium">My Requests</span>
+                                    </Link>
+                                </>
+                            )
+                        }
                         <Link to="/" className="flex items-center px-4 py-2 rounded-md ">
                             <FaHome className="text-xl" />
                             <button className="mx-4 font-medium">Home</button>
